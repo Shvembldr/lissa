@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const title = 'ebanisj';
+import './global/index.scss';
+
 
 ReactDOM.render(
-  <div>{title}</div>,
+  <div />,
   document.getElementById('app'),
 );
 
