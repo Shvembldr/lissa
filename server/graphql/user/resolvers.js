@@ -1,0 +1,36 @@
+import {
+  baseResolver,
+  isAuthenticatedResolver,
+} from '../baseResolver';
+import { encrypt } from '../../utils/encrypt';
+import { tryLogin } from '../../auth';
+import models from '../../models';
+
+export default () => ({
+  Query: {
+    me: isAuthenticatedResolver.createResolver((obj, args, { user }) =>
+      models.User.findById(user.id)),
+    users: isAuthenticatedResolver.createResolver(() => models.User.findAll()),
+  },
+
+  Mutation: {
+    register: baseResolver.createResolver(async (obj, { input }) => {
+      input.password = await encrypt.hash(input.password);
+      return models.User.create(input);
+    }),
+
+    login: baseResolver.createResolver(async (obj, { input: { email, password } }, { SECRET }) =>
+      tryLogin(email, password)),
+
+    updateUser: isAuthenticatedResolver.createResolver(async (obj, { id, input }) => {
+      const user = await models.User.findById(id);
+      input.password = await encrypt.hash(input.password);
+      return user.update(input);
+    }),
+
+    removeUser: isAuthenticatedResolver.createResolver(async (obj, { id }) => {
+      const user = await models.User.findById(id);
+      return user.destroy();
+    }),
+  },
+});

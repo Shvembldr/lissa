@@ -9,5 +9,7 @@ module.exports = {
     "browser": true,
     "jest": true,
   },
-
+  "rules": {
+    "max-len": ["error", { "code": 80 }]
+  }
 };
