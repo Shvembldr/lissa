@@ -7,7 +7,7 @@ dotenv.config();
 
 export default {
   ENVIRONMENT: process.env.NODE_ENV,
-  DB_CONFIG: {
+  db: {
     dialect: 'postgres',
     host: 'localhost',
     port: 5432,

@@ -1,10 +1,14 @@
 import Sequelize from 'sequelize';
 import config from '../config';
 
-const sequelize = new Sequelize(config.DB_CONFIG);
+const sequelize = new Sequelize(config.db);
 
 const models = {
+  Card: sequelize.import('./card'),
   User: sequelize.import('./user'),
+  Operation: sequelize.import('./operation'),
+  Worker: sequelize.import('./worker'),
+  Group: sequelize.import('./group'),
 };
 
 Object.keys(models).forEach((modelName) => {
