@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "программа учета произведенного товара",
   "scripts": {
-    "start": "NODE_ENV=development babel-node ./server/index.js",
+    "start": "NODE_ENV=development nodemon",
     "client": "webpack-dev-server --mode development --hot --open",
     "build": "webpack --mode production",
     "fix": "eslint --fix ./client/app/**.* ./server/**.*",

@@ -10,6 +10,6 @@ module.exports = {
     "jest": true,
   },
   "rules": {
-    "max-len": ["error", { "code": 80 }]
+    "max-len": ["error", { "code": 100 }]
   }
 };

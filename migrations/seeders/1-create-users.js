@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import { encrypt } from '../../server/utils/encrypt';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface) {
     let hashPasswords;
     const paswords = await new Array(1).fill(null).map(async () =>
       encrypt.hash('user}'));
@@ -30,7 +30,7 @@ module.exports = {
     );
   },
 
-  down(queryInterface, Sequelize) {
+  down(queryInterface) {
     return queryInterface.bulkDelete('Users', null, {});
   },
 };

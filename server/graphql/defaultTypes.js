@@ -19,4 +19,4 @@ schema {
 }
 `;
 
-export default [RootQuery,SchemaDefinition];
+export default [RootQuery, SchemaDefinition];

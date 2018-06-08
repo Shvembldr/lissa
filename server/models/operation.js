@@ -4,5 +4,13 @@ export default (sequelize, DataTypes) => {
     price: DataTypes.INTEGER,
   });
 
+  Operation.associate = (models) => {
+    Operation.belongsTo(models.Card, {
+      foreignKey: 'cardId',
+    });
+    Operation.belongsTo(models.Worker, {
+      foreignKey: 'workerId',
+    });
+  };
   return Operation;
 };

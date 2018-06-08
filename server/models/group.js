@@ -1,6 +1,9 @@
 export default (sequelize, DataTypes) => {
   const Group = sequelize.define('Group', {
-    type: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
   });
 
   Group.associate = (models) => {
