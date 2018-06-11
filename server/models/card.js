@@ -4,9 +4,6 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true,
     },
-    size: DataTypes.INTEGER,
-    count: DataTypes.INTEGER,
-    date: DataTypes.DATE,
   });
 
   Card.associate = (models) => {

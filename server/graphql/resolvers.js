@@ -5,6 +5,7 @@ import Card from './card/resolvers';
 import Group from './group/resolvers';
 import Operation from './operation/resolvers';
 import Worker from './worker/resolvers';
+import Product from './product/resolvers';
 
 const resolvers = combineResolvers([
   User(),
@@ -12,6 +13,7 @@ const resolvers = combineResolvers([
   Group(),
   Operation(),
   Worker(),
+  Product(),
 ]);
 
 export default resolvers;

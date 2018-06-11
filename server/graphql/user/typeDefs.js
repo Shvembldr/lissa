@@ -30,7 +30,7 @@ const User = [`
     updateUser(id: Int!, input: UserInput!): User
     removeUser(id: Int!): User
     register(input: UserInput!): User
-    login(input: LoginInput): AuthPayload!
+    login(input: LoginInput!): AuthPayload!
   }
 `];
 

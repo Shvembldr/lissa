@@ -10,9 +10,6 @@ module.exports = {
         .fill(null)
         .map((val, index) => ({
           vendorCode: `FFF-${index}`,
-          count: (index + 1) * 10,
-          date: new Date(),
-          size: ((index + 1) * 24) / 2,
           groupId: groups[index].id,
           createdAt: new Date(),
           updatedAt: new Date(),

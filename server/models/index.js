@@ -9,6 +9,7 @@ const models = {
   Operation: sequelize.import('./operation'),
   Worker: sequelize.import('./worker'),
   Group: sequelize.import('./group'),
+  Product: sequelize.import('./product'),
 };
 
 Object.keys(models).forEach((modelName) => {

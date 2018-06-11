@@ -10,6 +10,10 @@ export default (sequelize, DataTypes) => {
     Group.hasMany(models.Card, {
       foreignKey: 'groupId',
     });
+
+    Group.hasMany(models.Product, {
+      foreignKey: 'groupId',
+    });
   };
 
   return Group;

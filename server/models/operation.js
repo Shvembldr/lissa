@@ -8,6 +8,9 @@ export default (sequelize, DataTypes) => {
     Operation.belongsTo(models.Card, {
       foreignKey: 'cardId',
     });
+    Operation.belongsTo(models.Product, {
+      foreignKey: 'productId',
+    });
     Operation.belongsTo(models.Worker, {
       foreignKey: 'workerId',
     });

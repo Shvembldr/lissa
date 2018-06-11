@@ -19,7 +19,7 @@ export default () => ({
       return models.User.create(input);
     }),
 
-    login: baseResolver.createResolver(async (obj, { input: { email, password } }, { SECRET }) =>
+    login: baseResolver.createResolver(async (obj, { input: { email, password } }) =>
       tryLogin(email, password)),
 
     updateUser: isAuthenticatedResolver.createResolver(async (obj, { id, input }) => {

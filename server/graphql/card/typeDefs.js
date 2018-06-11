@@ -2,18 +2,12 @@ const Card = [`
   type Card {
     id: Int!
     vendorCode: String!
-    size: Int!
-    count: Int!
-    date: String!
     operations: [Operation]
     group: Group
   }
   
   input CardInput {
     vendorCode: String!
-    size: Int!
-    count: Int!
-    date: String!
     groupId: Int!
   }
   
