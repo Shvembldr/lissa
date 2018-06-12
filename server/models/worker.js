@@ -1,6 +1,9 @@
 export default (sequelize, DataTypes) => {
   const Worker = sequelize.define('Worker', {
-    code: DataTypes.INTEGER,
+    code: {
+      type: DataTypes.INTEGER,
+      unique: true,
+    },
     name: DataTypes.STRING,
     surname: DataTypes.STRING,
   });

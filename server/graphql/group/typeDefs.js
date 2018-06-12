@@ -16,6 +16,7 @@ const Group = [`
     createGroup(input: GroupInput!): Group
     updateGroup(id: Int!, input: GroupInput!): Group
     removeGroup(id: Int!): Group
+    removeGroups(ids: [Int!]): [Int!]
   }  
 `];
 

@@ -21,6 +21,7 @@ const Worker = [`
     createWorker(input: WorkerInput!): Worker
     updateWorker(id: Int!, input: WorkerInput!): Worker
     removeWorker(id: Int!): Worker
+    removeWorkers(ids: [Int!]): [Int!]
   }
 `];
 

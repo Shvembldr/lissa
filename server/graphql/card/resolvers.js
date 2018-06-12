@@ -31,6 +31,14 @@ export default () => ({
       const card = await models.Card.findById(id);
       return card.destroy();
     }),
+
+    removeCards: isAuthenticatedResolver.createResolver(async (obj, { ids }) => {
+      const cards = ids.map(id => models.Card.findById(id));
+      const resolvedCards = await Promise.all(cards);
+      const cardsToDestroy = resolvedCards.map(card => card.destroy());
+      await Promise.all(cardsToDestroy);
+      return ids;
+    }),
   },
 
   Card: {

@@ -17,9 +17,10 @@ const Card = [`
   }
   
   extend type Mutation {
-    createCard(input: CardInput!, operationCount: Int): Card
+    createCard(input: CardInput!, operationCount: Int!): Card
     updateCard(id: Int!, input: CardInput!): Card
     removeCard(id: Int!): Card
+    removeCards(ids: [Int!]): [Int!]
   }
 `];
 

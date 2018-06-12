@@ -4,7 +4,10 @@ import models from '../../models';
 export default () => ({
   Query: {
     groups: isAuthenticatedResolver.createResolver(() =>
-      models.Group.findAll()),
+      models.Group.findAll({
+        order: [['id', 'ASC']],
+      }),
+    ),
   },
 
   Mutation: {
@@ -13,13 +16,21 @@ export default () => ({
     }),
 
     updateGroup: isAuthenticatedResolver.createResolver(async (obj, { id, input }) => {
-      const Group = await models.Group.findById(id);
-      return Group.update(input);
+      const group = await models.Group.findById(id);
+      return group.update(input);
     }),
 
     removeGroup: isAuthenticatedResolver.createResolver(async (obj, { id }) => {
-      const Group = await models.Group.findById(id);
-      return Group.destroy();
+      const group = await models.Group.findById(id);
+      return group.destroy();
+    }),
+
+    removeGroups: isAuthenticatedResolver.createResolver(async (obj, { ids }) => {
+      const groups = ids.map(id => models.Group.findById(id));
+      const resolvedGroups = await Promise.all(groups);
+      const groupsToDestroy = resolvedGroups.map(group => group.destroy());
+      await Promise.all(groupsToDestroy);
+      return ids;
     }),
   },
 });
