@@ -3,7 +3,9 @@ import models from '../../models';
 
 export default () => ({
   Query: {
-    workers: isAuthenticatedResolver.createResolver(() => models.Worker.findAll()),
+    workers: isAuthenticatedResolver.createResolver(() => models.Worker.findAll({
+      order: [['code', 'ASC']],
+    })),
   },
 
   Mutation: {

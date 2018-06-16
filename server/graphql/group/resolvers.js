@@ -5,7 +5,7 @@ export default () => ({
   Query: {
     groups: isAuthenticatedResolver.createResolver(() =>
       models.Group.findAll({
-        order: [['id', 'ASC']],
+        order: [['id', 'DESC']],
       })),
   },
 

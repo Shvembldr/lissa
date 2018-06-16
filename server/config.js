@@ -13,7 +13,7 @@ export default {
     port: 5432,
     database: 'lissa',
     user: 'shvembldr',
-    operatorsAliases: { $like: Op.like },
+    operatorsAliases: { $like: Op.like, $any: Op.any, $and: Op.and },
     logging: false,
   },
 };

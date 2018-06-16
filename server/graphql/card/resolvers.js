@@ -4,18 +4,36 @@ import models from '../../models';
 export default () => ({
   Query: {
     card: isAuthenticatedResolver.createResolver((obj, { id }) => models.Card.findById(id)),
-    cards: isAuthenticatedResolver.createResolver((obj, { match }) => (match
-      ? models.Card.findAll({
+
+    cardsMatch: isAuthenticatedResolver.createResolver((obj, { match }) =>
+      models.Card.findAll({
         order: [['id', 'ASC']],
         where: {
           vendorCode: {
             $like: `${match}%`,
           },
         },
-      })
-      : models.Card.findAll({
-        order: [['id', 'ASC']],
-      }))),
+      })),
+
+    cards: isAuthenticatedResolver.createResolver(async (obj, {
+      match, filters, limit, offset,
+    }) => {
+      const groups = await models.Group.findAll({ raw: true });
+      const groupIds = groups.map(group => group.id);
+      return models.Card.findAndCountAll({
+        order: [['id', 'DESC']],
+        where: {
+          vendorCode: {
+            $like: `${match}%`,
+          },
+          groupId: {
+            $any: filters && filters.length > 0 ? filters.map(id => parseInt(id, 10)) : groupIds,
+          },
+        },
+        limit: limit || 8,
+        offset: offset || 0,
+      });
+    }),
   },
 
   Mutation: {

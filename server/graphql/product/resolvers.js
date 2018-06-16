@@ -5,7 +5,7 @@ export default () => ({
   Query: {
     products: isAuthenticatedResolver.createResolver(() =>
       models.Product.findAll({
-        order: [['id', 'ASC']],
+        order: [['id', 'DESC']],
       })),
   },
 

@@ -6,14 +6,21 @@ const Card = [`
     group: Group
   }
   
+  type CardResponse {
+    count: Int!
+    rows: [Card!]
+  }
+  
   input CardInput {
     vendorCode: String!
     groupId: Int!
   }
   
+  
   extend type Query {
     card(id: Int!): Card!
-    cards(match: String): [Card]!
+    cardsMatch(match: String): [Card!]
+    cards(match: String, filters: [String], limit: Int, offset: Int): CardResponse!
   }
   
   extend type Mutation {
