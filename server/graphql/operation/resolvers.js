@@ -10,11 +10,20 @@ export default () => ({
       return operation;
     }),
 
-    updateOperation: isAuthenticatedResolver.createResolver(async (obj, { id, input, workerId }) => {
+    updateOperation: isAuthenticatedResolver.createResolver(async (obj, { id, input }) => {
       const operation = await models.Operation.findById(id);
-      const worker = await models.Worker.findById(workerId);
-      await operation.update(input);
-      await operation.setWorker(worker);
+      if (input.workerCode) {
+        const worker = await models.Worker.findOne({
+          where: {
+            code: input.workerCode,
+          },
+        });
+        await operation.setWorker(worker);
+      }
+      await operation.update({
+        code: input.code,
+        price: input.price,
+      });
       return operation;
     }),
 
@@ -27,6 +36,14 @@ export default () => ({
   Operation: {
     worker(operation) {
       return operation.getWorker();
+    },
+
+    card(operation) {
+      return operation.getCard();
+    },
+
+    product(operation) {
+      return operation.getProduct();
     },
   },
 });

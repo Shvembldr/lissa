@@ -6,8 +6,7 @@ export default () => ({
     groups: isAuthenticatedResolver.createResolver(() =>
       models.Group.findAll({
         order: [['id', 'ASC']],
-      }),
-    ),
+      })),
   },
 
   Mutation: {

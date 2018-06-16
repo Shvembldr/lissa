@@ -30,7 +30,9 @@ export default () => ({
 
   Worker: {
     operations(worker) {
-      return worker.getOperations();
+      return worker.getOperations({
+        order: [['id', 'ASC']],
+      });
     },
   },
 });

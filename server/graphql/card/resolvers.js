@@ -3,27 +3,36 @@ import models from '../../models';
 
 export default () => ({
   Query: {
-    card: isAuthenticatedResolver.createResolver((obj, { id }) =>
-      models.Card.findById(id)),
-    cards: isAuthenticatedResolver.createResolver(() =>
-      models.Card.findAll()),
+    card: isAuthenticatedResolver.createResolver((obj, { id }) => models.Card.findById(id)),
+    cards: isAuthenticatedResolver.createResolver((obj, { match }) => (match
+      ? models.Card.findAll({
+        order: [['id', 'ASC']],
+        where: {
+          vendorCode: {
+            $like: `${match}%`,
+          },
+        },
+      })
+      : models.Card.findAll({
+        order: [['id', 'ASC']],
+      }))),
   },
 
   Mutation: {
-    createCard: isAuthenticatedResolver
-      .createResolver(async (obj, { input, operationCount }) => {
-        const card = await models.Card.create(input);
-        const operationsData = new Array(operationCount).fill(null).map((data, i) => ({
-          code: i + 1,
-          price: 0,
-          cardId: card.dataValues.id,
-        }));
-        await models.Operation.bulkCreate(operationsData);
-        return card;
-      }),
+    createCard: isAuthenticatedResolver.createResolver(async (obj, { input, operationCount }) => {
+      const card = await models.Card.create(input);
+      const operationsData = new Array(operationCount).fill(null).map((data, i) => ({
+        code: i + 1,
+        price: 0,
+        cardId: card.dataValues.id,
+      }));
+      await models.Operation.bulkCreate(operationsData);
+      return card;
+    }),
 
     updateCard: isAuthenticatedResolver.createResolver(async (obj, { id, input }) => {
       const card = await models.Card.findById(id);
+      await card.setGroup(input.groupId);
       return card.update(input);
     }),
 
@@ -43,7 +52,9 @@ export default () => ({
 
   Card: {
     operations(card) {
-      return card.getOperations();
+      return card.getOperations({
+        order: [['code', 'ASC']],
+      });
     },
 
     group(card) {

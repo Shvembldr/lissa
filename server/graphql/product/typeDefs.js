@@ -3,18 +3,17 @@ const Product = [`
     id: Int!
     vendorCode: String!
     operations: [Operation!]
-    group: Group!
+    group: Group
     size: Int!
     count: Int!
     date: String!
   }
   
   input ProductInput {
-    cardId: Int!
+    vendorCode: String!
     size: Int!
     count: Int!
     date: String!
-    groupId: Int!
   }
   
   extend type Query {
@@ -25,6 +24,7 @@ const Product = [`
     createProduct(input: ProductInput!): Product
     updateProduct(id: Int!, input: ProductInput!): Product
     removeProduct(id: Int!): Product
+    removeProducts(ids: [Int!]): [Int!]
   }
 `];
 

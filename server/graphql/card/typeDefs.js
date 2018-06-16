@@ -13,7 +13,7 @@ const Card = [`
   
   extend type Query {
     card(id: Int!): Card!
-    cards: [Card]!
+    cards(match: String): [Card]!
   }
   
   extend type Mutation {

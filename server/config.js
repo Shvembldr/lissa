@@ -13,7 +13,7 @@ export default {
     port: 5432,
     database: 'lissa',
     user: 'shvembldr',
-    operatorsAliases: { $and: Op.and },
-    logging: false, // TODO: посмотреть что с логгингом
+    operatorsAliases: { $like: Op.like },
+    logging: false,
   },
 };
