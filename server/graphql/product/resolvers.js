@@ -4,10 +4,11 @@ import models from '../../models';
 export default () => ({
   Query: {
     products: isAuthenticatedResolver.createResolver(async (obj, {
-      match, filters, limit, offset,
+      match, filters, dates, limit, offset,
     }) => {
       const groups = await models.Group.findAll({ raw: true });
       const groupIds = groups.map(group => group.id);
+      const date = new Date();
       return models.Product.findAndCountAll({
         order: [['id', 'DESC']],
         where: {
@@ -16,6 +17,9 @@ export default () => ({
           },
           groupId: {
             $any: filters && filters.length > 0 ? filters.map(id => parseInt(id, 10)) : groupIds,
+          },
+          date: {
+            $between: dates || ['1970-01-01T00:00:00+00:00', date.toISOString()],
           },
         },
         limit: limit || 8,

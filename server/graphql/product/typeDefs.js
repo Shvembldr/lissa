@@ -22,7 +22,8 @@ const Product = [`
   }
   
   extend type Query {
-    products(match: String, filters: [String], limit: Int, offset: Int): ProductResponse
+    products(match: String, filters: [String], 
+    dates: [String!], limit: Int, offset: Int): ProductResponse
   }
   
   extend type Mutation {
