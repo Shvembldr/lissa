@@ -3,39 +3,53 @@ import models from '../../models';
 
 export default () => ({
   Query: {
-    products: isAuthenticatedResolver.createResolver(() =>
-      models.Product.findAll({
+    products: isAuthenticatedResolver.createResolver(async (obj, {
+      match, filters, limit, offset,
+    }) => {
+      const groups = await models.Group.findAll({ raw: true });
+      const groupIds = groups.map(group => group.id);
+      return models.Product.findAndCountAll({
         order: [['id', 'DESC']],
-      })),
+        where: {
+          vendorCode: {
+            $like: `${match}%`,
+          },
+          groupId: {
+            $any: filters && filters.length > 0 ? filters.map(id => parseInt(id, 10)) : groupIds,
+          },
+        },
+        limit: limit || 8,
+        offset: offset || 0,
+      });
+    }),
   },
 
   Mutation: {
-    createProduct: isAuthenticatedResolver
-      .createResolver(async (obj, { input }) => {
-        const card = await models.Card.findOne({
-          where: {
-            vendorCode: input.vendorCode,
-          },
-        });
-        const operations = await card.getOperations({ raw: true });
-        const group = await card.getGroup();
+    createProduct: isAuthenticatedResolver.createResolver(async (obj, { input }) => {
+      const card = await models.Card.findOne({
+        where: {
+          vendorCode: input.vendorCode,
+        },
+      });
+      const operations = await card.getOperations({ raw: true });
+      const group = await card.getGroup();
 
-        const product = await models.Product.create({
-          vendorCode: card.dataValues.vendorCode,
-          size: input.size,
-          count: input.count,
-          date: input.date,
-        });
+      const product = await models.Product.create({
+        vendorCode: card.dataValues.vendorCode,
+        size: input.size,
+        count: input.count,
+        date: input.date,
+      });
 
-        await models.Operation.bulkCreate(operations.map(op => ({
-          code: op.code,
-          price: op.price,
-          productId: product.dataValues.id,
-        })));
+      await models.Operation.bulkCreate(operations.map(op => ({
+        code: op.code,
+        price: op.price,
+        productId: product.dataValues.id,
+      })));
 
-        await product.setGroup(group);
-        return product;
-      }),
+      await product.setGroup(group);
+      return product;
+    }),
 
     updateProduct: isAuthenticatedResolver.createResolver(async (obj, { id, input }) => {
       const card = await models.Card.findOne({

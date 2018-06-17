@@ -9,6 +9,11 @@ const Product = [`
     date: String!
   }
   
+  type ProductResponse {
+    count: Int!
+    rows: [Product!]
+  }
+  
   input ProductInput {
     vendorCode: String!
     size: Int!
@@ -17,7 +22,7 @@ const Product = [`
   }
   
   extend type Query {
-    products: [Product]!
+    products(match: String, filters: [String], limit: Int, offset: Int): ProductResponse
   }
   
   extend type Mutation {

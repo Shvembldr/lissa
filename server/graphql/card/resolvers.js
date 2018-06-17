@@ -10,7 +10,7 @@ export default () => ({
         order: [['id', 'ASC']],
         where: {
           vendorCode: {
-            $like: `${match}%`,
+            $like: `%${match}`,
           },
         },
       })),
