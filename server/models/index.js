@@ -1,8 +1,7 @@
 import Sequelize from 'sequelize';
 import config from '../config';
 
-console.log('CONFIG: ', config.db);
-const sequelize = new Sequelize(config.db);
+const sequelize = new Sequelize(config.db.url);
 
 const models = {
   Card: sequelize.import('./card'),
