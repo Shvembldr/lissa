@@ -14,6 +14,7 @@ export default {
         url: process.env.DATABASE_URL,
         operatorsAliases: { $like: Op.like, $any: Op.any, $between: Op.between },
         logging: false,
+        database: 'lissa',
       }
       : {
         dialect: 'postgres',
