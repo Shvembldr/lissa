@@ -19,7 +19,34 @@ export default () => ({
           },
         });
         await operation.setWorker(worker);
+        return operation;
       }
+
+      const card = await operation.getCard({ raw: true });
+
+      const products = await models.Product.findAll({
+        where: {
+          vendorCode: card.vendorCode,
+
+        },
+      });
+
+      if (products) {
+        const operations = products.map(product => product.getOperations({
+          where: {
+            code: input.code,
+          },
+        }));
+
+        const resolvedOperations = await Promise.all(operations);
+
+        const updateOperations = resolvedOperations.map(op => op[0].update({
+          code: input.code,
+          price: input.price,
+        }));
+        await Promise.all(updateOperations);
+      }
+
       await operation.update({
         code: input.code,
         price: input.price,

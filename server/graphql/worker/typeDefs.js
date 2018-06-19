@@ -15,6 +15,7 @@ const Worker = [`
   
   extend type Query {
     workers: [Worker]!
+    workersReport(dateRange: [String!]): [Worker!]
   }
   
   extend type Mutation {

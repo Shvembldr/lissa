@@ -3,13 +3,35 @@ import models from '../../models';
 
 export default () => ({
   Query: {
-    workers: isAuthenticatedResolver.createResolver(() => models.Worker.findAll({
-      order: [['code', 'ASC']],
-    })),
+    workers: isAuthenticatedResolver.createResolver(() =>
+      models.Worker.findAll({
+        order: [['code', 'ASC']],
+      })),
+
+    workersReport: isAuthenticatedResolver
+      .createResolver(async (obj, { dateRange }) => models.Worker.findAll({
+        include: {
+          model: models.Operation,
+          required: true,
+          include: {
+            model: models.Product,
+            where: {
+              date: {
+                $between: dateRange,
+              },
+            },
+          },
+        },
+        order: [
+          ['code', 'ASC'],
+          [{ model: models.Operation }, 'id', 'ASC'],
+        ],
+      })),
   },
 
   Mutation: {
-    createWorker: isAuthenticatedResolver.createResolver((obj, { input }) => models.Worker.create(input)),
+    createWorker: isAuthenticatedResolver.createResolver((obj, { input }) =>
+      models.Worker.create(input)),
 
     updateWorker: isAuthenticatedResolver.createResolver(async (obj, { id, input }) => {
       const Worker = await models.Worker.findById(id);
@@ -32,6 +54,9 @@ export default () => ({
 
   Worker: {
     operations(worker) {
+      if (worker.dataValues.Operations) {
+        return worker.dataValues.Operations;
+      }
       return worker.getOperations({
         order: [['id', 'ASC']],
       });
