@@ -1,16 +1,16 @@
 import 'babel-polyfill';
-import models from '../../server/models';
+import randomFromArr from '../../server/utils/randomFromArr';
 
 module.exports = {
   async up(queryInterface) {
-    const groups = await models.Group.findAll({ raw: true });
+    const groupsIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     return queryInterface.bulkInsert(
       'Cards',
-      new Array(5)
+      new Array(100)
         .fill(null)
-        .map((val, index) => ({
-          vendorCode: `FFF-${index}`,
-          groupId: groups[index].id,
+        .map(() => ({
+          vendorCode: Math.random().toString().substr(2, 8),
+          groupId: randomFromArr(groupsIds),
           createdAt: new Date(),
           updatedAt: new Date(),
         })),

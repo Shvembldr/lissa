@@ -1,14 +1,15 @@
 import 'babel-polyfill';
 import models from '../../server/models';
+import randomInt from '../../server/utils/randomInt';
 
 module.exports = {
   async up(queryInterface) {
     const cards = await models.Card.findAll({ raw: true });
 
     const allOperations = cards.reduce((acc, card) => {
-      const operations = new Array(10).fill(null).map((op, i) => ({
+      const operations = new Array(randomInt(1, 12)).fill(null).map((op, i) => ({
         code: i,
-        price: (i + 1) * 10,
+        price: randomInt(1, 24),
         cardId: card.id,
         createdAt: new Date(),
         updatedAt: new Date(),

@@ -16,17 +16,42 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          name: 'Штаны',
+          name: 'Жакеты',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: 'Кепки',
+          name: 'Кардиганы',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: 'Шорты',
+          name: 'Рубашки',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Юбки',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Брюки',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Сарафаны',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Шаровары',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Пальто',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
