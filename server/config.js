@@ -8,7 +8,7 @@ dotenv.config();
 export default {
   ENVIRONMENT: process.env.NODE_ENV,
   db:
-    process.env.NODE_ENV === 'production'
+    process.env.NODE_ENV !== 'development'
       ? {
         dialect: 'postgres',
         url: process.env.DATABASE_URL,
