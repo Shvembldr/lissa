@@ -26,6 +26,46 @@ export default () => ({
         offset: offset || 0,
       });
     }),
+
+    productsReport: isAuthenticatedResolver.createResolver(async (obj, { dateRange }) => {
+      const products = await models.Product.findAll({
+        order: [['id', 'DESC']],
+        where: {
+          date: {
+            $between: dateRange,
+          },
+        },
+        include: {
+          model: models.Operation,
+        },
+      });
+
+      const productsHash = products.reduce((acc, product) => {
+        const { vendorCode, count, Operations } = product.dataValues;
+        if (!acc.vendorCode) {
+          acc[vendorCode] = {
+            count: 0,
+            price: Operations.reduce((sum, op) => {
+              return sum + op.dataValues.price;
+            }, 0),
+          };
+        }
+
+        acc[vendorCode].count += count;
+        acc[vendorCode].sum = acc[vendorCode].count * acc[vendorCode].price;
+
+        return acc;
+      }, {});
+
+      return {
+        report: Object.keys(productsHash).map(key => ({
+          vendorCode: key,
+          count: productsHash[key].count,
+          price: productsHash[key].price,
+          sum: productsHash[key].sum,
+        })),
+      };
+    }),
   },
 
   Mutation: {
