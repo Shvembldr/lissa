@@ -7,13 +7,21 @@ dotenv.config();
 
 export default {
   ENVIRONMENT: process.env.NODE_ENV,
-  db: {
-    dialect: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    database: 'lissa',
-    user: 'shvembldr',
-    operatorsAliases: { $like: Op.like, $any: Op.any, $between: Op.between },
-    logging: false,
-  },
+  db:
+    process.env.NODE_ENV === 'production'
+      ? {
+        dialect: 'postgres',
+        url: process.env.DATABASE_URL,
+        operatorsAliases: { $like: Op.like, $any: Op.any, $between: Op.between },
+        logging: false,
+      }
+      : {
+        dialect: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        database: 'lissa',
+        user: 'shvembldr',
+        operatorsAliases: { $like: Op.like, $any: Op.any, $between: Op.between },
+        logging: false,
+      },
 };
