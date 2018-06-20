@@ -3,7 +3,7 @@ import config from '../config';
 
 const { Op } = Sequelize;
 
-const sequelize = new Sequelize(config.db, {
+const sequelize = new Sequelize(config.db.url, {
   operatorsAliases: { $like: Op.like, $any: Op.any, $between: Op.between },
   logging: false,
 });
