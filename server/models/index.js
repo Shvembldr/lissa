@@ -1,7 +1,12 @@
 import Sequelize from 'sequelize';
 import config from '../config';
 
-const sequelize = new Sequelize(config.db.url);
+const { Op } = Sequelize;
+
+const sequelize = new Sequelize(config.db, {
+  operatorsAliases: { $like: Op.like, $any: Op.any, $between: Op.between },
+  logging: false,
+});
 
 const models = {
   Card: sequelize.import('./card'),

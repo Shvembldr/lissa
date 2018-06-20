@@ -9,7 +9,7 @@ module.exports = {
     const allOperations = cards.reduce((acc, card) => {
       const operations = new Array(randomInt(1, 12)).fill(null).map((op, i) => ({
         code: i,
-        price: randomInt(1, 24),
+        price: randomInt(1, 24) * 10,
         cardId: card.id,
         createdAt: new Date(),
         updatedAt: new Date(),

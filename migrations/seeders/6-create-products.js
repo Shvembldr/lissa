@@ -16,7 +16,7 @@ module.exports = {
           vendorCode: cards[index % 100].vendorCode,
           groupId: cards[index % 100].groupId,
           size: randomFromArr(sizes),
-          count: randomInt(1, 9),
+          count: randomInt(1, 24),
           date: randomDate(new Date(2018, 1, 1), new Date()),
           createdAt: new Date(),
           updatedAt: new Date(),
