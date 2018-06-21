@@ -23,6 +23,13 @@ export const AuthenticationRequiredError = createError(
   },
 );
 
+export const NoWorkerError = createError(
+  'NoWorkerError',
+  {
+    message: 'Wrong worker id',
+  },
+);
+
 export const ServerError = createError('ServerError', {
   message: 'Server error occurred while processing your request',
 });

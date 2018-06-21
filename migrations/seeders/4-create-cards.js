@@ -1,9 +1,12 @@
 import 'babel-polyfill';
 import randomFromArr from '../../server/utils/randomFromArr';
+import models from '../../server/models';
 
 module.exports = {
   async up(queryInterface) {
-    const groupsIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const groups = await models.Group.findAll({ raw: true });
+    const groupsIds = groups.map(group => group.id);
+
     return queryInterface.bulkInsert(
       'Cards',
       new Array(100)
