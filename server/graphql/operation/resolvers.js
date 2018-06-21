@@ -11,58 +11,77 @@ export default () => ({
       return operation;
     }),
 
-    updateOperation: isAuthenticatedResolver.createResolver(async (obj, { id, input }) => {
-      const operation = await models.Operation.findById(id);
-      if (input.workerCode) {
-        const worker = await models.Worker.findOne({
+    updateOperations: isAuthenticatedResolver.createResolver(async (obj, { input }) => {
+      const ids = input.map(operation => operation.id);
+      const operations = await models.Operation.findAll({
+        where: {
+          id: {
+            $any: ids,
+          },
+        },
+      });
+
+      if (input[0].workerCode) {
+        const workerCodes = input.map(operation => operation.workerCode);
+
+        const workers = await models.Worker.findAll({
           where: {
-            code: input.workerCode,
+            code: {
+              $any: workerCodes,
+            },
           },
         });
 
-        console.log(worker)
+        const setWorkerOperations = operations.map(async (operation, index) => {
+          const worker = workers.find(w => w.dataValues.id === workerCodes[index]);
+          if (!worker) {
+            throw new Error();
+          } else {
+            await operation.setWorker(worker);
+          }
+        });
 
-        if (!worker) {
+        try {
+          await Promise.all(setWorkerOperations);
+          return operations;
+        } catch (e) {
           throw new NoWorkerError();
-        } else {
-          await operation.setWorker(worker);
-          return operation;
         }
       }
 
-      const card = await operation.getCard({ raw: true });
+      const cards = operations.map(operation => operation.getCard({ raw: true }));
+
+      const resolvedCards = await Promise.all(cards);
+
+      const cardVendorCodes = resolvedCards.map(card => card.vendorCode);
 
       const products = await models.Product.findAll({
         where: {
-          vendorCode: card.vendorCode,
+          vendorCode: {
+            $any: cardVendorCodes,
+          },
         },
       });
 
       if (products) {
-        const operations = products.map(product =>
-          product.getOperations({
-            where: {
-              code: input.code,
-            },
-          }),
-        );
+        const productOperations = products.map(product => product.getOperations());
 
-        const resolvedOperations = await Promise.all(operations);
+        const resolvedproductOperations = await Promise.all(productOperations);
 
-        const updateOperations = resolvedOperations.map(op =>
-          op[0].update({
-            code: input.code,
-            price: input.price,
-          }),
-        );
+        const updateOperations = resolvedproductOperations.map(ops =>
+          ops.forEach((operation, index) =>
+            operation.update({
+              price: input[index].price,
+            })));
         await Promise.all(updateOperations);
       }
 
-      await operation.update({
-        code: input.code,
-        price: input.price,
-      });
-      return operation;
+      await operations.forEach(async (operation, index) =>
+        operation.update({
+          price: input[index].price,
+        }));
+
+      return operations;
     }),
 
     removeOperation: isAuthenticatedResolver.createResolver(async (obj, { id }) => {

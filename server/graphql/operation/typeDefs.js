@@ -9,14 +9,14 @@ const Operation = [`
   }
   
   input OperationInput {
-    code: Int!
-    price: Int!
+    id: Int
+    price: Int
     workerCode: Int
   }
   
   extend type Mutation {
     createOperation(input: OperationInput!, workerCode: Int!): Operation
-    updateOperation(id: Int!, input: OperationInput!): Operation
+    updateOperations(input: [OperationInput!]): [Operation]
     removeOperation(id: Int!): Operation
   }
 `];
