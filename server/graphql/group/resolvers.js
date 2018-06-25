@@ -1,4 +1,4 @@
-import { isAuthenticatedResolver } from '../baseResolver';
+import { isAdminResolver, isAuthenticatedResolver } from '../baseResolver';
 import models from '../../models';
 
 export default () => ({
@@ -10,21 +10,19 @@ export default () => ({
   },
 
   Mutation: {
-    createGroup: isAuthenticatedResolver.createResolver((obj, { input }) => {
-      return models.Group.create(input);
-    }),
+    createGroup: isAdminResolver.createResolver((obj, { input }) => models.Group.create(input)),
 
-    updateGroup: isAuthenticatedResolver.createResolver(async (obj, { id, input }) => {
+    updateGroup: isAdminResolver.createResolver(async (obj, { id, input }) => {
       const group = await models.Group.findById(id);
       return group.update(input);
     }),
 
-    removeGroup: isAuthenticatedResolver.createResolver(async (obj, { id }) => {
+    removeGroup: isAdminResolver.createResolver(async (obj, { id }) => {
       const group = await models.Group.findById(id);
       return group.destroy();
     }),
 
-    removeGroups: isAuthenticatedResolver.createResolver(async (obj, { ids }) => {
+    removeGroups: isAdminResolver.createResolver(async (obj, { ids }) => {
       const groups = ids.map(id => models.Group.findById(id));
       const resolvedGroups = await Promise.all(groups);
       const groupsToDestroy = resolvedGroups.map(group => group.destroy());

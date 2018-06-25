@@ -3,6 +3,7 @@ const User = [`
     id: Int!
     name: String!
     email: String!
+    role: String!
   }
   
   type AuthPayload {

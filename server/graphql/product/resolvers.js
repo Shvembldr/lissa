@@ -1,4 +1,4 @@
-import { isAuthenticatedResolver } from '../baseResolver';
+import { isAdminResolver, isAuthenticatedResolver } from '../baseResolver';
 import models from '../../models';
 
 export default () => ({
@@ -27,7 +27,7 @@ export default () => ({
       });
     }),
 
-    productsReport: isAuthenticatedResolver.createResolver(async (obj, { dateRange }) => {
+    productsReport: isAdminResolver.createResolver(async (obj, { dateRange }) => {
       const products = await models.Product.findAll({
         order: [['id', 'DESC']],
         where: {
@@ -45,9 +45,7 @@ export default () => ({
         if (!acc.vendorCode) {
           acc[vendorCode] = {
             count: 0,
-            price: Operations.reduce((sum, op) => {
-              return sum + op.dataValues.price;
-            }, 0),
+            price: Operations.reduce((sum, op) => sum + op.dataValues.price, 0),
           };
         }
 

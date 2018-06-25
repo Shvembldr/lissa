@@ -1,11 +1,12 @@
 import 'babel-polyfill';
 import { encrypt } from '../../server/utils/encrypt';
+import { USER_ROLE } from '../../server/constants';
 
 module.exports = {
   async up(queryInterface) {
     let hashPasswords;
     const paswords = await new Array(1).fill(null).map(async () =>
-      encrypt.hash('user}'));
+      encrypt.hash('user'));
     const adminPass = await encrypt.hash('admin');
     await Promise.all(paswords).then(passes => (hashPasswords = passes));
     return queryInterface.bulkInsert(
@@ -15,6 +16,7 @@ module.exports = {
         .map((val, index) => ({
           name: 'user',
           email: 'user@user.com',
+          role: USER_ROLE.USER,
           password: hashPasswords[index],
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -22,6 +24,7 @@ module.exports = {
         .concat({
           name: 'admin',
           email: 'admin@admin.com',
+          role: USER_ROLE.ADMIN,
           password: adminPass,
           createdAt: new Date(),
           updatedAt: new Date(),
