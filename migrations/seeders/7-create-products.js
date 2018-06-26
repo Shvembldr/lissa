@@ -1,8 +1,8 @@
 import 'babel-polyfill';
-import models from '../../server/models';
-import randomFromArr from '../../server/utils/randomFromArr';
-import randomInt from '../../server/utils/randomInt';
-import randomDate from '../../server/utils/randomDate';
+import models from '../../src/models';
+import randomFromArr from '../../src/utils/randomFromArr';
+import randomInt from '../../src/utils/randomInt';
+import randomDate from '../../src/utils/randomDate';
 
 module.exports = {
   async up(queryInterface) {
@@ -13,24 +13,21 @@ module.exports = {
 
     return queryInterface.bulkInsert(
       'Products',
-      new Array(500)
-        .fill(null)
-        .map((val, index) => ({
-          vendorCode: cards[index % 100].vendorCode,
-          groupId: cards[index % 100].groupId,
-          customerId: randomFromArr(customersIds),
-          size: randomFromArr(sizes),
-          count: randomInt(1, 24),
-          date: randomDate(new Date(2018, 1, 1), new Date()),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })),
-      {},
+      new Array(500).fill(null).map((val, index) => ({
+        vendorCode: cards[index % 100].vendorCode,
+        groupId: cards[index % 100].groupId,
+        customerId: randomFromArr(customersIds),
+        size: randomFromArr(sizes),
+        count: randomInt(1, 24),
+        date: randomDate(new Date(2018, 1, 1), new Date()),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })),
+      {}
     );
   },
 
   down(queryInterface) {
     return queryInterface.bulkDelete('Products', null, {});
-  },
+  }
 };
-

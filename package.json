@@ -6,8 +6,17 @@
     "start": "babel-node server/index.js",
     "watch": "NODE_ENV=development nodemon",
     "build": "webpack --mode production",
-    "fix": "eslint --fix ./client/app/**.* ./server/**.*",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "author": "shvembldr",
   "license": "ISC",
@@ -18,10 +27,13 @@
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
-    "eslint": "4.19.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
     "eslint-loader": "2.0.0",
-    "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
     "nodemon": "1.17.5"
   },
   "dependencies": {
