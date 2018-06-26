@@ -4,16 +4,16 @@ export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     name: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
     },
     email: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
     },
     role: {
-      type: DataTypes.ENUM(USER_ROLE.USER, USER_ROLE.ADMIN)
+      type: DataTypes.ENUM(USER_ROLE.USER, USER_ROLE.ADMIN),
     },
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
   });
 
   return User;

@@ -2,17 +2,17 @@ export default (sequelize, DataTypes) => {
   const Group = sequelize.define('Group', {
     name: {
       type: DataTypes.STRING,
-      unique: true
-    }
+      unique: true,
+    },
   });
 
-  Group.associate = models => {
+  Group.associate = (models) => {
     Group.hasMany(models.Card, {
-      foreignKey: 'groupId'
+      foreignKey: 'groupId',
     });
 
     Group.hasMany(models.Product, {
-      foreignKey: 'groupId'
+      foreignKey: 'groupId',
     });
   };
 

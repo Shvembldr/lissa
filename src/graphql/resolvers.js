@@ -15,7 +15,7 @@ const resolvers = combineResolvers([
   Operation(),
   Worker(),
   Product(),
-  Customer()
+  Customer(),
 ]);
 
 export default resolvers;

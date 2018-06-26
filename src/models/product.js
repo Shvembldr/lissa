@@ -3,20 +3,20 @@ export default (sequelize, DataTypes) => {
     vendorCode: DataTypes.STRING,
     size: DataTypes.INTEGER,
     count: DataTypes.INTEGER,
-    date: DataTypes.DATE
+    date: DataTypes.DATE,
   });
 
-  Product.associate = models => {
+  Product.associate = (models) => {
     Product.hasMany(models.Operation, {
-      foreignKey: 'productId'
+      foreignKey: 'productId',
     });
 
     Product.belongsTo(models.Group, {
-      foreignKey: 'groupId'
+      foreignKey: 'groupId',
     });
 
     Product.belongsTo(models.Customer, {
-      foreignKey: 'customerId'
+      foreignKey: 'customerId',
     });
   };
 

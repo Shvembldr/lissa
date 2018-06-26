@@ -6,6 +6,7 @@
     "start": "babel-node server/index.js",
     "watch": "NODE_ENV=development nodemon",
     "build": "webpack --mode production",
+    "fix": "eslint --fix ./src/**/**.*",
     "test": "echo \"Error: no test specified\" && exit 1",
     "precommit": "lint-staged"
   },

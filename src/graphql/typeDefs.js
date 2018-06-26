@@ -15,7 +15,7 @@ const types = [
   ...Group,
   ...Worker,
   ...Product,
-  ...Customer
+  ...Customer,
 ];
 
 export default types;

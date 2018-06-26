@@ -5,7 +5,7 @@ const { Op } = Sequelize;
 
 const sequelize = new Sequelize(config.db.url, {
   operatorsAliases: { $like: Op.like, $any: Op.any, $between: Op.between },
-  logging: false
+  logging: false,
 });
 
 const models = {
@@ -15,10 +15,10 @@ const models = {
   Worker: sequelize.import('./worker'),
   Group: sequelize.import('./group'),
   Product: sequelize.import('./product'),
-  Customer: sequelize.import('./customer')
+  Customer: sequelize.import('./customer'),
 };
 
-Object.keys(models).forEach(modelName => {
+Object.keys(models).forEach((modelName) => {
   if ('associate' in models[modelName]) {
     models[modelName].associate(models);
   }

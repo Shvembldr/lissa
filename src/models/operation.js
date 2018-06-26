@@ -1,18 +1,18 @@
 export default (sequelize, DataTypes) => {
   const Operation = sequelize.define('Operation', {
     code: DataTypes.INTEGER,
-    price: DataTypes.INTEGER
+    price: DataTypes.INTEGER,
   });
 
-  Operation.associate = models => {
+  Operation.associate = (models) => {
     Operation.belongsTo(models.Card, {
-      foreignKey: 'cardId'
+      foreignKey: 'cardId',
     });
     Operation.belongsTo(models.Product, {
-      foreignKey: 'productId'
+      foreignKey: 'productId',
     });
     Operation.belongsTo(models.Worker, {
-      foreignKey: 'workerId'
+      foreignKey: 'workerId',
     });
   };
   return Operation;

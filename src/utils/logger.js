@@ -8,10 +8,10 @@ const logger = new Logger({
     new winston.transports.Console({
       level: config.ENVIRONMENT === 'production' ? 'error' : 'debug',
       timestamp: tsFormat,
-      colorize: true
+      colorize: true,
     }),
-    new winston.transports.File({ filename: 'debug.log', level: 'debug' })
-  ]
+    new winston.transports.File({ filename: 'debug.log', level: 'debug' }),
+  ],
 });
 
 if (config.ENVIRONMENT !== 'production') {

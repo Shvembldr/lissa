@@ -10,7 +10,7 @@ const graphiqlRouter = express.Router();
 
 const schema = makeExecutableSchema({
   typeDefs: types,
-  resolvers
+  resolvers,
 });
 
 graphqlRouter.use(
@@ -18,9 +18,9 @@ graphqlRouter.use(
     schema,
     context: {
       SECRET,
-      user: req.user
-    }
-  }))
+      user: req.user,
+    },
+  })),
 );
 
 graphiqlRouter.use(graphiqlExpress({ endpointURL: '/graphql' }));
