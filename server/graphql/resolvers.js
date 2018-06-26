@@ -6,6 +6,7 @@ import Group from './group/resolvers';
 import Operation from './operation/resolvers';
 import Worker from './worker/resolvers';
 import Product from './product/resolvers';
+import Customer from './customer/resolvers';
 
 const resolvers = combineResolvers([
   User(),
@@ -14,6 +15,7 @@ const resolvers = combineResolvers([
   Operation(),
   Worker(),
   Product(),
+  Customer(),
 ]);
 
 export default resolvers;

@@ -8,7 +8,7 @@ import models from './models';
 export const createTokens = async (user) => {
   const createToken = jwt.sign(
     {
-      user: _.pick(user, ['id']),
+      user: _.pick(user, ['id', 'role']),
     },
     SECRET,
     {

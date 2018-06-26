@@ -15,6 +15,7 @@ const models = {
   Worker: sequelize.import('./worker'),
   Group: sequelize.import('./group'),
   Product: sequelize.import('./product'),
+  Customer: sequelize.import('./customer'),
 };
 
 Object.keys(models).forEach((modelName) => {

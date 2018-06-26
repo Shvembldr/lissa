@@ -3,6 +3,7 @@ const Product = [`
     id: Int!
     vendorCode: String!
     operations: [Operation!]
+    customer: Customer!
     group: Group
     size: Int!
     count: Int!
@@ -27,6 +28,7 @@ const Product = [`
   
   input ProductInput {
     vendorCode: String!
+    customerId: Int!
     size: Int!
     count: Int!
     date: String!

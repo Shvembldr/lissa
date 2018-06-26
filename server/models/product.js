@@ -14,6 +14,10 @@ export default (sequelize, DataTypes) => {
     Product.belongsTo(models.Group, {
       foreignKey: 'groupId',
     });
+
+    Product.belongsTo(models.Customer, {
+      foreignKey: 'customerId',
+    });
   };
 
   return Product;

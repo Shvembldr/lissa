@@ -90,6 +90,7 @@ export default () => ({
       })));
 
       await product.setGroup(group);
+      await product.setCustomer(input.customerId);
       return product;
     }),
 
@@ -126,6 +127,7 @@ export default () => ({
       });
 
       await product.setGroup(group);
+      await product.setCustomer(input.customerId);
 
       return product;
     }),
@@ -153,6 +155,10 @@ export default () => ({
 
     group(product) {
       return product.getGroup();
+    },
+
+    customer(product) {
+      return product.getCustomer();
     },
   },
 });
