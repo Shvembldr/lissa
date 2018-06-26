@@ -26,16 +26,15 @@
     "babel-eslint": "8.2.3",
     "babel-plugin-import": "^1.7.0",
     "babel-preset-env": "1.7.0",
-    "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-loader": "2.0.0",
     "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jsx-a11y": "6.0.3",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.0",
-    "nodemon": "1.17.5"
+    "nodemon": "1.17.5",
+    "prettier": "1.13.6"
   },
   "dependencies": {
     "apollo-errors": "1.9.0",
@@ -51,7 +50,6 @@
     "cors": "2.8.4",
     "dotenv": "6.0.0",
     "express": "4.16.3",
-    "extract-text-webpack-plugin": "4.0.0-beta.0",
     "final-form": "4.8.1",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
@@ -60,7 +58,6 @@
     "lodash": "4.17.10",
     "pg": "7.4.3",
     "pg-hstore": "2.3.2",
-    "prop-types": "15.6.1",
     "sequelize": "4.37.10",
     "sequelize-cli": "^4.0.0",
     "winston": "2.4.2"
