@@ -5,7 +5,6 @@
   "scripts": {
     "start": "babel-node server/index.js",
     "watch": "NODE_ENV=development nodemon",
-    "build": "webpack --mode production",
     "fix": "eslint --fix ./server/**/**.*",
     "test": "echo \"Error: no test specified\" && exit 1",
     "precommit": "lint-staged"
@@ -24,15 +23,15 @@
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-eslint": "8.2.3",
-    "babel-plugin-import": "^1.7.0",
+    "babel-plugin-import": "1.8.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-2": "6.24.1",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb-base": "13.0.0",
     "eslint-loader": "2.0.0",
-    "eslint-plugin-import": "^2.13.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.2.0",
+    "eslint-plugin-import": "2.13.0",
+    "husky": "0.14.3",
+    "lint-staged": "7.2.0",
     "nodemon": "1.17.5",
     "prettier": "1.13.6"
   },
@@ -59,7 +58,7 @@
     "pg": "7.4.3",
     "pg-hstore": "2.3.2",
     "sequelize": "4.37.10",
-    "sequelize-cli": "^4.0.0",
+    "sequelize-cli": "4.0.0",
     "winston": "2.4.2"
   }
 }
