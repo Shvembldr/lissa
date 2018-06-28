@@ -1,12 +1,11 @@
 module.exports = {
-  extends: "airbnb-base",
+  extends: 'airbnb-base',
   env: {
     browser: true,
     jest: true
   },
   rules: {
-    'max-len': ['error', { code: 80 }],
+    'max-len': 'off',
     'import/prefer-default-export': 0
   }
 };
-

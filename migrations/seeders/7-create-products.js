@@ -1,8 +1,8 @@
 import 'babel-polyfill';
-import models from '../../src/models';
-import randomFromArr from '../../src/utils/randomFromArr';
-import randomInt from '../../src/utils/randomInt';
-import randomDate from '../../src/utils/randomDate';
+import models from '../../server/models';
+import randomFromArr from '../../server/utils/randomFromArr';
+import randomInt from '../../server/utils/randomInt';
+import randomDate from '../../server/utils/randomDate';
 
 module.exports = {
   async up(queryInterface) {
@@ -21,13 +21,13 @@ module.exports = {
         count: randomInt(1, 24),
         date: randomDate(new Date(2018, 1, 1), new Date()),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       })),
-      {}
+      {},
     );
   },
 
   down(queryInterface) {
     return queryInterface.bulkDelete('Products', null, {});
-  }
+  },
 };

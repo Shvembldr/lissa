@@ -1,6 +1,6 @@
 import 'babel-polyfill';
-import randomFromArr from '../../src/utils/randomFromArr';
-import models from '../../src/models';
+import randomFromArr from '../../server/utils/randomFromArr';
+import models from '../../server/models';
 
 module.exports = {
   async up(queryInterface) {
@@ -15,13 +15,13 @@ module.exports = {
           .substr(2, 8),
         groupId: randomFromArr(groupsIds),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       })),
-      {}
+      {},
     );
   },
 
   down(queryInterface) {
     return queryInterface.bulkDelete('Cards', null, {});
-  }
+  },
 };
