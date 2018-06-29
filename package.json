@@ -5,7 +5,7 @@
   "scripts": {
     "start": "babel-node server/index.js",
     "server": "NODE_ENV=development nodemon",
-    "client": "cd client && yarn start",
+    "client": "cd client && npm start",
     "fix": "eslint --fix .",
     "test:client": "react-app-rewired test --env=jsdom",
     "test:server": "echo \"Error: no test specified\" && exit 1",
