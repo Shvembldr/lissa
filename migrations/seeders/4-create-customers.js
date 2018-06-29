@@ -64,4 +64,3 @@ module.exports = {
     return queryInterface.bulkDelete('Customers', null, {});
   },
 };
-

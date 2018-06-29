@@ -1,0 +1,9 @@
+.card-select-container {
+  position: relative;
+}
+
+.card-select-spinner {
+  position: absolute;
+  top: 11px;
+  right: 9px;
+}

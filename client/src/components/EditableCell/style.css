@@ -1,0 +1,12 @@
+.input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ok-button {
+  margin-right: 24px;
+  margin-left: 10px;
+  flex-shrink: 0;
+}

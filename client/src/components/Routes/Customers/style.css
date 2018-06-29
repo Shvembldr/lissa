@@ -1,0 +1,11 @@
+.table-header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.customer-table {
+  margin-top: 16px;
+  width: 40%;
+}

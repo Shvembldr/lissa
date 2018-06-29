@@ -1,0 +1,13 @@
+.production-table {
+  margin-top: 16px;
+}
+
+.operations-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.operations-button {
+  margin-left: 16px;
+}

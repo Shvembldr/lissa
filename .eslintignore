@@ -1,2 +1,3 @@
-postcss.config.js
-/build
+/node_modules
+/client/node_modules
+/client/src/registerServiceWorker.js

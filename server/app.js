@@ -22,10 +22,10 @@ app.use(addUser);
 app.use('/graphql', graphqlRouter);
 app.use('/graphiql', graphiqlRouter);
 
-app.use(express.static(path.resolve(__dirname, './../build')));
+app.use(express.static(path.resolve(__dirname, './../client/build')));
 
 app.use('*', (req, res) => {
-  res.sendFile(path.resolve(path.join(__dirname, './../build'), 'index.html'));
+  res.sendFile(path.resolve(path.join(__dirname, './../client/build'), 'index.html'));
 });
 
 export default app;
