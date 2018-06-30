@@ -10,8 +10,6 @@ env:
 notifications:
   email: false
 
-install: true
-
 script:
   - npm run pre-test
   - npm run test:server
