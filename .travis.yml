@@ -1,0 +1,16 @@
+sudo: false
+language: node_js
+
+node_js:
+  - '9'
+
+env:
+  - SECRET=9AKLJS0AVUAJV0AJV0JAVJ0AJVA0VJ
+
+notifications:
+  email: false
+
+script:
+  - npm run pre-test
+  - npm run test:server
+  - npm run after-test
