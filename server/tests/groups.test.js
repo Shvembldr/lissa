@@ -1,6 +1,5 @@
 import app from '../app';
-import getTokens from './getTokens';
-import { makeGraphQlQuery } from './utils';
+import { getTokens, makeGraphQlQuery } from './utils';
 import { groups } from './queries';
 
 describe('GraphQL Groups', () => {

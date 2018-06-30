@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { sequelize } from '../models';
+import { sequelize } from '../../models/index';
 
 const spawnOptions = { stdio: 'inherit' };
 

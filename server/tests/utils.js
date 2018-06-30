@@ -1,4 +1,6 @@
 import request from 'supertest';
+import { USER_ROLE } from '../constants';
+import { createTokens } from '../auth';
 
 export const makeGraphQlQuery = ({
   app, tokens, query, variables,
@@ -12,3 +14,22 @@ export const makeGraphQlQuery = ({
   .set('x-refresh-token', tokens[1])
   .set('Content-Type', 'application/json')
   .set('Accept', 'application/json');
+
+const user = {
+  id: 1,
+  role: USER_ROLE.USER,
+};
+
+const admin = {
+  id: 2,
+  role: USER_ROLE.ADMIN,
+};
+
+export const getTokens = async () => {
+  const adminTokens = await createTokens(admin);
+  const userTokens = await createTokens(user);
+  return {
+    adminTokens,
+    userTokens,
+  };
+};
