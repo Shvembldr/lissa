@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Shvembldr/lissa.svg?branch=master)](https://travis-ci.org/Shvembldr/lissa)
+
 # Lissa Tabs
 
 ## Приложение для учета произведенного товара и зарплаты сотрудников
