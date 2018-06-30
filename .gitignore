@@ -6,6 +6,7 @@
 
 # testing
 /coverage
+db.test
 
 # misc
 .DS_Store

@@ -8,7 +8,9 @@
     "client": "cd client && npm start",
     "fix": "eslint --fix .",
     "test:client": "react-app-rewired test --env=jsdom",
-    "test:server": "echo \"Error: no test specified\" && exit 1",
+    "pre-test": "NODE_ENV=test babel-node ./server/tests/seed",
+    "after-test": "babel-node ./server/tests/removeTestDb",
+    "test:server": "NODE_ENV=test jest ./server/tests",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "precommit": "lint-staged",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
@@ -29,13 +31,15 @@
     "eslint-config-airbnb-base": "13.0.0",
     "eslint-config-react-app": "2.1.0",
     "eslint-plugin-flowtype": "2.49.3",
+    "eslint-plugin-import": "2.13.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.10.0",
-    "eslint-plugin-import": "2.13.0",
     "husky": "0.14.3",
+    "jest": "23.2.0",
     "lint-staged": "7.2.0",
     "nodemon": "1.17.5",
-    "prettier": "1.13.6"
+    "prettier": "1.13.6",
+    "supertest": "3.1.0"
   },
   "dependencies": {
     "apollo-errors": "1.9.0",
@@ -65,6 +69,7 @@
     "pg-hstore": "2.3.2",
     "sequelize": "4.37.10",
     "sequelize-cli": "4.0.0",
+    "sqlite3": "4.0.1",
     "winston": "2.4.2"
   },
   "engines": {

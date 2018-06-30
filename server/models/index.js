@@ -1,12 +1,7 @@
 import Sequelize from 'sequelize';
 import config from '../config';
 
-const { Op } = Sequelize;
-
-const sequelize = new Sequelize(config.db.url, {
-  operatorsAliases: { $like: Op.like, $any: Op.any, $between: Op.between },
-  logging: false,
-});
+const sequelize = new Sequelize(config.db);
 
 const models = {
   Card: sequelize.import('./card'),
@@ -25,5 +20,8 @@ Object.keys(models).forEach((modelName) => {
 });
 
 models.sequelize = sequelize;
+sequelize.sync();
+
+export { sequelize };
 
 export default models;

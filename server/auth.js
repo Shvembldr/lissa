@@ -1,14 +1,16 @@
 import jwt from 'jsonwebtoken';
-import _ from 'lodash';
+import { pick } from 'lodash';
 import { UserDoesNotExistError, WrongPasswordError } from './graphql/errors';
-import { SECRET } from './utils/authUtils';
+import config from './config';
 import { encrypt } from './utils/encrypt';
 import models from './models';
+
+const { SECRET } = config;
 
 export const createTokens = async (user) => {
   const createToken = jwt.sign(
     {
-      user: _.pick(user, ['id', 'role']),
+      user: pick(user, ['id', 'role']),
     },
     SECRET,
     {
@@ -18,7 +20,7 @@ export const createTokens = async (user) => {
 
   const createRefreshToken = jwt.sign(
     {
-      user: _.pick(user, 'id'),
+      user: pick(user, 'id'),
     },
     SECRET,
     {

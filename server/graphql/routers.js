@@ -2,9 +2,10 @@ import express from 'express';
 import { makeExecutableSchema } from 'graphql-tools';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import resolvers from './resolvers';
-import { SECRET } from '../utils/authUtils';
+import config from '../config';
 import types from './typeDefs';
 
+const { SECRET } = config;
 const graphqlRouter = express.Router();
 const graphiqlRouter = express.Router();
 

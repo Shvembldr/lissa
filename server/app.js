@@ -7,7 +7,7 @@ import { addUser } from './auth';
 
 const app = express();
 
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.PORT);
 
 app.use(cors());
 app.use(
@@ -21,6 +21,11 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(addUser);
 app.use('/graphql', graphqlRouter);
 app.use('/graphiql', graphiqlRouter);
+
+app.use('/test', (req, res) => {
+  res.send('AAAA');
+  req.next();
+});
 
 app.use(express.static(path.resolve(__dirname, './../client/build')));
 
