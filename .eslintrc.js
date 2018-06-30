@@ -4,6 +4,10 @@ module.exports = {
     browser: true,
     jest: true
   },
+  parser: 'babel-eslint',
+  parserOptions: {
+    sourceType: 'module'
+  },
   rules: {
     'max-len': 'off',
     'import/prefer-default-export': 0,
