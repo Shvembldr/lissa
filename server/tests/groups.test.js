@@ -1,12 +1,13 @@
+import faker from 'faker';
 import app from '../app';
 import { groups } from './queries';
 import { getTokens, makeGraphQlQuery } from './utils';
-import randomString from '../utils/randomString';
 
 describe('GraphQL Groups', () => {
   let tokens;
   let testGroupId;
   let testGroupName;
+  let groupsCount;
   beforeAll(async () => {
     tokens = await getTokens();
   });
@@ -24,10 +25,11 @@ describe('GraphQL Groups', () => {
     expect(data).toHaveProperty('groups');
     expect(data.groups[0]).toHaveProperty('id');
     expect(data.groups[0]).toHaveProperty('name');
+    groupsCount = data.groups.length;
   });
 
   test('Create group', async () => {
-    const groupName = randomString();
+    const groupName = faker.random.word();
     const response = await makeGraphQlQuery({
       app,
       tokens: tokens.adminTokens,
@@ -71,7 +73,7 @@ describe('GraphQL Groups', () => {
   });
 
   test('Update group', async () => {
-    const groupName = randomString();
+    const groupName = faker.random.word();
     const response = await makeGraphQlQuery({
       app,
       tokens: tokens.adminTokens,
@@ -109,5 +111,14 @@ describe('GraphQL Groups', () => {
     expect(data).toHaveProperty('removeGroups');
     expect(data.removeGroups).toHaveLength(1);
     expect(data.removeGroups).toContain(testGroupId);
+
+    const getGroupsResponse = await makeGraphQlQuery({
+      app,
+      tokens: tokens.adminTokens,
+      query: groups.getGroups,
+    });
+
+    expect(getGroupsResponse.statusCode).toBe(200);
+    expect(getGroupsResponse.body.data.groups).toHaveLength(groupsCount);
   });
 });
