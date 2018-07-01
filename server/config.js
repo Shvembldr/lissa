@@ -13,8 +13,8 @@ export default {
   db:
     process.env.NODE_ENV === 'test'
       ? {
-        dialect: 'sqlite',
-        storage: 'db.test',
+        dialect: 'postgres',
+        url: process.env.TEST_DATABASE_URL,
         database: 'database_test',
         operatorsAliases,
         logging: false,

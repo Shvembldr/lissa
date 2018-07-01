@@ -23,7 +23,6 @@ class Cards extends Component {
       limit: TABLE_ROW_COUNT,
       offset: 0,
       match: '',
-      filter: '',
     },
     filterDropdownVisible: false,
     searchText: '',
