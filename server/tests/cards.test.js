@@ -3,7 +3,7 @@ import app from '../app';
 import { cards } from './queries';
 import { getTokens, makeGraphQlQuery } from './utils';
 import { TABLE_ROW_COUNT } from '../../client/src/constants';
-import models from '../models';
+import models, { sequelize } from '../models/index';
 
 describe('GraphQL Cards', () => {
   let tokens;
@@ -23,6 +23,10 @@ describe('GraphQL Cards', () => {
     const groups = await models.Group.findAll({ raw: true });
     groupIdFirst = groups[0].id;
     groupIdSecond = groups[1].id;
+  });
+
+  afterAll(async () => {
+    sequelize.connectionManager.close();
   });
 
   test('Get cards', async () => {
@@ -162,15 +166,17 @@ describe('GraphQL Cards', () => {
     expect(data).toHaveProperty('removeCards');
     expect(data.removeCards).toHaveLength(1);
     expect(data.removeCards).toContain(testCardId);
-
-    // const getCardsResponse = await makeGraphQlQuery({
-    //   app,
-    //   tokens: tokens.adminTokens,
-    //   query: cards.getCards,
-    //   variables,
-    // });
-    //
-    // expect(getCardsResponse.statusCode).toBe(200);
-    // expect(getCardsResponse.body.data.cards.count).toBe(cardsCount);
   });
+  //
+  // test('Get same cards count as before', async () => {
+  //   const getCardsResponse = await makeGraphQlQuery({
+  //     app,
+  //     tokens: tokens.adminTokens,
+  //     query: cards.getCards,
+  //     variables,
+  //   });
+  //
+  //   expect(getCardsResponse.statusCode).toBe(200);
+  //   expect(getCardsResponse.body.data.cards.count).toBe(cardsCount);
+  // });
 });

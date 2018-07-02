@@ -11,7 +11,7 @@
     "test:client": "react-app-rewired test --env=jsdom",
     "pre-test": "NODE_ENV=test babel-node ./migrations/seedDb",
     "after-test": "NODE_ENV=test babel-node ./migrations/unSeedDb",
-    "test:server": "NODE_ENV=test jest ./server/tests --forceExit",
+    "test:server": "NODE_ENV=test jest ./server/tests",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "precommit": "lint-staged",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"

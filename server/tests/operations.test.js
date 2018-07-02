@@ -2,7 +2,7 @@ import faker from 'faker';
 import app from '../app';
 import { cards, operations, products } from './queries';
 import { getTokens, makeGraphQlQuery } from './utils';
-import models from '../models/index';
+import models, { sequelize } from '../models/index';
 import randomFromArr from '../utils/randomFromArr';
 
 describe('GraphQL Operations', () => {
@@ -50,6 +50,10 @@ describe('GraphQL Operations', () => {
         input: product,
       },
     });
+  });
+
+  afterAll(async () => {
+    sequelize.connectionManager.close();
   });
 
   test('Update operations for cards', async () => {

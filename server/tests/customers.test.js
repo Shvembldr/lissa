@@ -2,6 +2,7 @@ import faker from 'faker';
 import app from '../app';
 import { customers } from './queries';
 import { getTokens, makeGraphQlQuery } from './utils';
+import { sequelize } from '../models/index';
 
 describe('GraphQL Customers', () => {
   let tokens;
@@ -10,6 +11,10 @@ describe('GraphQL Customers', () => {
   let customersCount;
   beforeAll(async () => {
     tokens = await getTokens();
+  });
+
+  afterAll(async () => {
+    sequelize.connectionManager.close();
   });
 
   test('Get customers', async () => {

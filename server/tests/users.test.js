@@ -2,6 +2,7 @@ import app from '../app';
 import { makeGraphQlQuery } from './utils';
 import { user } from './queries';
 import { USER_ROLE } from '../constants';
+import { sequelize } from '../models/index';
 
 describe('GraphQL User', () => {
   const tokens = [];
@@ -9,6 +10,10 @@ describe('GraphQL User', () => {
     email: 'admin@admin.com',
     password: 'admin',
   };
+
+  afterAll(async () => {
+    sequelize.connectionManager.close();
+  });
 
   test('login', async () => {
     const response = await makeGraphQlQuery({

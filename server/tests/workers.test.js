@@ -3,6 +3,7 @@ import moment from 'moment/moment';
 import app from '../app';
 import { workers } from './queries';
 import { getTokens, makeGraphQlQuery } from './utils';
+import { sequelize } from '../models/index';
 
 describe('GraphQL Workers', () => {
   let tokens;
@@ -14,11 +15,15 @@ describe('GraphQL Workers', () => {
     tokens = await getTokens();
   });
 
+  afterAll(async () => {
+    sequelize.connectionManager.close();
+  });
+
   test('Get workers', async () => {
     const response = await makeGraphQlQuery({
       app,
       tokens: tokens.adminTokens,
-      query: workers.getWorkers,
+      query: workers.getWorkers
     });
 
     expect(response.statusCode).toBe(200);
@@ -41,8 +46,8 @@ describe('GraphQL Workers', () => {
       tokens: tokens.adminTokens,
       query: workers.getWorkersReport,
       variables: {
-        dateRange,
-      },
+        dateRange
+      }
     });
 
     expect(response.statusCode).toBe(200);
@@ -60,15 +65,15 @@ describe('GraphQL Workers', () => {
     const worker = {
       code: faker.random.number(),
       name: faker.name.firstName(),
-      surname: faker.name.lastName(),
+      surname: faker.name.lastName()
     };
     const response = await makeGraphQlQuery({
       app,
       tokens: tokens.adminTokens,
       query: workers.createWorker,
       variables: {
-        input: worker,
-      },
+        input: worker
+      }
     });
 
     expect(response.statusCode).toBe(200);
@@ -86,7 +91,7 @@ describe('GraphQL Workers', () => {
     testWorker = {
       code: data.createWorker.code,
       name: data.createWorker.name,
-      surname: data.createWorker.surname,
+      surname: data.createWorker.surname
     };
   });
 
@@ -94,15 +99,15 @@ describe('GraphQL Workers', () => {
     const worker = {
       code: faker.random.number(),
       name: faker.name.firstName(),
-      surname: faker.name.lastName(),
+      surname: faker.name.lastName()
     };
     const response = await makeGraphQlQuery({
       app,
       tokens: tokens.userTokens,
       query: workers.createWorker,
       variables: {
-        input: worker,
-      },
+        input: worker
+      }
     });
 
     expect(response.statusCode).toBe(200);
@@ -119,8 +124,8 @@ describe('GraphQL Workers', () => {
       tokens: tokens.adminTokens,
       query: workers.createWorker,
       variables: {
-        input: testWorker,
-      },
+        input: testWorker
+      }
     });
 
     expect(response.statusCode).toBe(200);
@@ -135,7 +140,7 @@ describe('GraphQL Workers', () => {
     const worker = {
       code: faker.random.number(),
       name: faker.name.firstName(),
-      surname: faker.name.lastName(),
+      surname: faker.name.lastName()
     };
 
     const response = await makeGraphQlQuery({
@@ -144,8 +149,8 @@ describe('GraphQL Workers', () => {
       query: workers.updateWorker,
       variables: {
         id: testWorkerId,
-        input: worker,
-      },
+        input: worker
+      }
     });
 
     expect(response.statusCode).toBe(200);
@@ -167,8 +172,8 @@ describe('GraphQL Workers', () => {
       tokens: tokens.adminTokens,
       query: workers.removeWorkers,
       variables: {
-        ids: [testWorkerId],
-      },
+        ids: [testWorkerId]
+      }
     });
 
     expect(response.statusCode).toBe(200);
@@ -181,7 +186,7 @@ describe('GraphQL Workers', () => {
     const getWorkersResponse = await makeGraphQlQuery({
       app,
       tokens: tokens.adminTokens,
-      query: workers.getWorkers,
+      query: workers.getWorkers
     });
 
     expect(getWorkersResponse.statusCode).toBe(200);

@@ -1,10 +1,10 @@
 import faker from 'faker';
-// import moment from 'moment';
+import moment from 'moment';
 import app from '../app';
 import { products } from './queries';
 import { getTokens, makeGraphQlQuery } from './utils';
 import { TABLE_ROW_COUNT } from '../../client/src/constants';
-import models from '../models/index';
+import models, { sequelize } from '../models/index';
 
 describe('GraphQL Products', () => {
   let tokens;
@@ -16,7 +16,7 @@ describe('GraphQL Products', () => {
   let cardSecond;
   let cardFirstOperations;
   let cardSecondOperations;
-  // const now = new Date();
+  const now = new Date();
   const variables = {
     limit: TABLE_ROW_COUNT,
     offset: 0,
@@ -32,6 +32,10 @@ describe('GraphQL Products', () => {
     cardSecondOperations = await cards[1].getOperations();
     customerIdFirst = customers[0].id;
     customerIdSecond = customers[1].id;
+  });
+
+  afterAll(async () => {
+    sequelize.connectionManager.close();
   });
 
   test('Get products', async () => {
@@ -60,29 +64,29 @@ describe('GraphQL Products', () => {
     // productsCount = data.products.count;
   });
 
-  // test('Get products report', async () => {
-  //   const startDate = moment(now).subtract(1, 'month');
-  //   const endDate = moment(now);
-  //   const dateRange = [startDate.toISOString(), endDate.toISOString()];
-  //   const response = await makeGraphQlQuery({
-  //     app,
-  //     tokens: tokens.adminTokens,
-  //     query: products.getProductsReport,
-  //     variables: {
-  //       dateRange,
-  //     },
-  //   });
-  //
-  //   expect(response.statusCode).toBe(200);
-  //
-  //   const { data } = response.body;
-  //   expect(data).toHaveProperty('productsReport');
-  //   expect(data.productsReport).toHaveProperty('report');
-  //   expect(data.productsReport.report[0]).toHaveProperty('count');
-  //   expect(data.productsReport.report[0]).toHaveProperty('vendorCode');
-  //   expect(data.productsReport.report[0]).toHaveProperty('price');
-  //   expect(data.productsReport.report[0]).toHaveProperty('sum');
-  // });
+  test('Get products report', async () => {
+    const startDate = moment(now).subtract(1, 'month');
+    const endDate = moment(now);
+    const dateRange = [startDate.toISOString(), endDate.toISOString()];
+    const response = await makeGraphQlQuery({
+      app,
+      tokens: tokens.adminTokens,
+      query: products.getProductsReport,
+      variables: {
+        dateRange,
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
+
+    const { data } = response.body;
+    expect(data).toHaveProperty('productsReport');
+    expect(data.productsReport).toHaveProperty('report');
+    expect(data.productsReport.report[0]).toHaveProperty('count');
+    expect(data.productsReport.report[0]).toHaveProperty('vendorCode');
+    expect(data.productsReport.report[0]).toHaveProperty('price');
+    expect(data.productsReport.report[0]).toHaveProperty('sum');
+  });
 
   test('Create product', async () => {
     const product = {
@@ -122,6 +126,7 @@ describe('GraphQL Products', () => {
       new Date(product.date).toDateString(),
     );
     testProductId = data.createProduct.id;
+    console.log(testProductId);
   });
 
   test('Update product', async () => {
@@ -181,15 +186,17 @@ describe('GraphQL Products', () => {
     expect(data).toHaveProperty('removeProducts');
     expect(data.removeProducts).toHaveLength(1);
     expect(data.removeProducts).toContain(testProductId);
-
-    // const getProductsResponse = await makeGraphQlQuery({
-    //   app,
-    //   tokens: tokens.adminTokens,
-    //   query: products.getProducts,
-    //   variables,
-    // });
-    //
-    // expect(getProductsResponse.statusCode).toBe(200);
-    // expect(getProductsResponse.body.data.products.count).toBe(productsCount);
   });
+
+  // test('Get same products count as before', async () => {
+  //   const getProductsResponse = await makeGraphQlQuery({
+  //     app,
+  //     tokens: tokens.adminTokens,
+  //     query: products.getProducts,
+  //     variables,
+  //   });
+  //
+  //   expect(getProductsResponse.statusCode).toBe(200);
+  //   expect(getProductsResponse.body.data.products.count).toBe(productsCount);
+  // });
 });
