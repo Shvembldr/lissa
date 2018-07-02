@@ -6,6 +6,7 @@ node_js:
 
 env:
   - SECRET=9AKLJS0AVUAJV0AJV0JAVJ0AJVA0VJ
+  - TEST_DATABASE_URL=postgres://localhost:5432/database_test
 
 services:
   - postgresql
