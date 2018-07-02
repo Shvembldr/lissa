@@ -52,6 +52,27 @@ describe('GraphQL Groups', () => {
     testGroupName = data.createGroup.name;
   });
 
+  test('User can not create group', async () => {
+    const groupName = faker.random.word();
+    const response = await makeGraphQlQuery({
+      app,
+      tokens: tokens.userTokens,
+      query: groups.createGroup,
+      variables: {
+        input: {
+          name: groupName,
+        },
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
+
+    const { data, errors } = response.body;
+    expect(data).toHaveProperty('createGroup');
+    expect(data.createGroup).toBe(null);
+    expect(errors[0].message).toBe('You must be an admin to do this');
+  });
+
   test('Can not create same group', async () => {
     const response = await makeGraphQlQuery({
       app,

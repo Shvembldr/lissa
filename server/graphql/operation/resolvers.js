@@ -4,13 +4,6 @@ import { NoWorkerError } from '../errors';
 
 export default () => ({
   Mutation: {
-    createOperation: isAuthenticatedResolver.createResolver(async (obj, { input, workerId }) => {
-      const operation = await models.Operation.create(input);
-      const worker = await models.Worker.findById(workerId);
-      await operation.setWorker(worker);
-      return operation;
-    }),
-
     updateOperations: isAuthenticatedResolver.createResolver(async (obj, { input }) => {
       const ids = input.map(operation => operation.id);
       const operations = await models.Operation.findAll({
@@ -66,9 +59,9 @@ export default () => ({
       if (products) {
         const productOperations = products.map(product => product.getOperations());
 
-        const resolvedproductOperations = await Promise.all(productOperations);
+        const resolvedProductOperations = await Promise.all(productOperations);
 
-        const updateOperations = resolvedproductOperations.map(ops => ops.forEach((operation, index) => operation.update({
+        const updateOperations = resolvedProductOperations.map(ops => ops.forEach((operation, index) => operation.update({
           price: input[index].price,
         })));
 
@@ -80,11 +73,6 @@ export default () => ({
       }));
 
       return operations;
-    }),
-
-    removeOperation: isAuthenticatedResolver.createResolver(async (obj, { id }) => {
-      const operation = await models.Operation.findById(id);
-      return operation.destroy();
     }),
   },
 

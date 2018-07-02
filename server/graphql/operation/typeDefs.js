@@ -16,9 +16,7 @@ const Operation = [
   }
   
   extend type Mutation {
-    createOperation(input: OperationInput!, workerCode: Int!): Operation
     updateOperations(input: [OperationInput!]): [Operation]
-    removeOperation(id: Int!): Operation
   }
 `,
 ];

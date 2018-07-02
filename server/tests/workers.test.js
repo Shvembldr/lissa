@@ -64,6 +64,29 @@ describe('GraphQL Workers', () => {
     };
   });
 
+  test('User can not create worker', async () => {
+    const worker = {
+      code: faker.random.number(),
+      name: faker.name.firstName(),
+      surname: faker.name.lastName(),
+    };
+    const response = await makeGraphQlQuery({
+      app,
+      tokens: tokens.userTokens,
+      query: workers.createWorker,
+      variables: {
+        input: worker,
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
+
+    const { data, errors } = response.body;
+    expect(data).toHaveProperty('createWorker');
+    expect(data.createWorker).toBe(null);
+    expect(errors[0].message).toBe('You must be an admin to do this');
+  });
+
   test('Can not create worker with same code', async () => {
     const response = await makeGraphQlQuery({
       app,

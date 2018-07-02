@@ -355,15 +355,6 @@ const workers = {
   `,
 };
 
-const login = `
-  mutation login($input: LoginInput!) {
-    login(input: $input) {
-      token
-      refreshToken
-    }
-  }
-`;
-
 export {
-  user, cards, customers, groups, operations, products, workers, login,
+  user, cards, customers, groups, operations, products, workers,
 };

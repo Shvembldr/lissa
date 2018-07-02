@@ -52,6 +52,27 @@ describe('GraphQL Customers', () => {
     testCustomerName = data.createCustomer.name;
   });
 
+  test('User can not create customer', async () => {
+    const customerName = faker.random.word();
+    const response = await makeGraphQlQuery({
+      app,
+      tokens: tokens.userTokens,
+      query: customers.createCustomer,
+      variables: {
+        input: {
+          name: customerName,
+        },
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
+
+    const { data, errors } = response.body;
+    expect(data).toHaveProperty('createCustomer');
+    expect(data.createCustomer).toBe(null);
+    expect(errors[0].message).toBe('You must be an admin to do this');
+  });
+
   test('Can not create same customer', async () => {
     const response = await makeGraphQlQuery({
       app,
