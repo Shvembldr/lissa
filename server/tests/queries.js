@@ -1,4 +1,12 @@
 const user = {
+  login: `
+  mutation login($input: LoginInput!) {
+    login(input: $input) {
+      token
+      refreshToken
+    }
+  }
+`,
   getUser: `
     query user {
       me {
@@ -253,7 +261,7 @@ const products = {
       }
     }
   `,
-  updateProduce: `
+  updateProduct: `
     mutation updateProduct($id: Int!, $input: ProductInput!) {
       updateProduct(id: $id, input: $input) {
         id

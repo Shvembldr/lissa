@@ -29,7 +29,7 @@ export const makeGraphQlQuery = ({
     query,
     variables,
   })
-  .set('x-token', tokens[0])
-  .set('x-refresh-token', tokens[1])
+  .set('x-token', tokens ? tokens[0] : '')
+  .set('x-refresh-token', tokens ? tokens[1] : '')
   .set('Content-Type', 'application/json')
   .set('Accept', 'application/json');

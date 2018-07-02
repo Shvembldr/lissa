@@ -16,7 +16,7 @@ describe('GraphQL Cards', () => {
   const variables = {
     limit: TABLE_ROW_COUNT,
     offset: 0,
-    match: ''
+    match: '',
   };
   beforeAll(async () => {
     tokens = await getTokens();
@@ -30,7 +30,7 @@ describe('GraphQL Cards', () => {
       app,
       tokens: tokens.adminTokens,
       query: cards.getCards,
-      variables
+      variables,
     });
 
     expect(response.statusCode).toBe(200);
@@ -50,7 +50,7 @@ describe('GraphQL Cards', () => {
   test('Create card', async () => {
     const card = {
       vendorCode: faker.random.number(),
-      groupId: groupIdFirst
+      groupId: groupIdFirst,
     };
     const response = await makeGraphQlQuery({
       app,
@@ -58,8 +58,8 @@ describe('GraphQL Cards', () => {
       query: cards.createCard,
       variables: {
         input: card,
-        operationCount
-      }
+        operationCount,
+      },
     });
 
     expect(response.statusCode).toBe(200);
@@ -80,7 +80,7 @@ describe('GraphQL Cards', () => {
   test('Can not create card with same vendorCode', async () => {
     const card = {
       vendorCode: testCardVendorCode,
-      groupId: groupIdFirst
+      groupId: groupIdFirst,
     };
     const response = await makeGraphQlQuery({
       app,
@@ -88,8 +88,8 @@ describe('GraphQL Cards', () => {
       query: cards.createCard,
       variables: {
         input: card,
-        operationCount
-      }
+        operationCount,
+      },
     });
 
     expect(response.statusCode).toBe(200);
@@ -100,10 +100,29 @@ describe('GraphQL Cards', () => {
     expect(errors[0].message).toBe('Validation error');
   });
 
+  test('Get cards match', async () => {
+    const match = testCardVendorCode.toString().slice(-1);
+    const response = await makeGraphQlQuery({
+      app,
+      tokens: tokens.adminTokens,
+      query: cards.getCardsMatch,
+      variables: {
+        match,
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
+
+    const { data } = response.body;
+    expect(data).toHaveProperty('cardsMatch');
+    const vendorCodes = data.cardsMatch.map(card => card.vendorCode);
+    expect(vendorCodes).toContain(testCardVendorCode);
+  });
+
   test('Update card', async () => {
     const card = {
       vendorCode: faker.random.number(),
-      groupId: groupIdSecond
+      groupId: groupIdSecond,
     };
 
     const response = await makeGraphQlQuery({
@@ -112,8 +131,8 @@ describe('GraphQL Cards', () => {
       query: cards.updateCard,
       variables: {
         id: testCardId,
-        input: card
-      }
+        input: card,
+      },
     });
 
     expect(response.statusCode).toBe(200);
@@ -133,8 +152,8 @@ describe('GraphQL Cards', () => {
       tokens: tokens.adminTokens,
       query: cards.removeCards,
       variables: {
-        ids: [testCardId]
-      }
+        ids: [testCardId],
+      },
     });
 
     expect(response.statusCode).toBe(200);
@@ -148,7 +167,7 @@ describe('GraphQL Cards', () => {
       app,
       tokens: tokens.adminTokens,
       query: cards.getCards,
-      variables
+      variables,
     });
 
     expect(getCardsResponse.statusCode).toBe(200);
