@@ -71,7 +71,6 @@
     "pg-hstore": "2.3.2",
     "sequelize": "4.37.10",
     "sequelize-cli": "4.0.0",
-    "sqlite3": "4.0.1",
     "winston": "2.4.2"
   },
   "engines": {
