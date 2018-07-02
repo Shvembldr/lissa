@@ -12,7 +12,7 @@ const updateCache = (cache, { data: { createWorker } }) => {
   const { workers } = cache.readQuery({ query: getWorkers });
   cache.writeQuery({
     query: getWorkers,
-    data: { workers: workers.concat([createWorker]) },
+    data: { workers: [createWorker, ...workers] },
   });
 };
 

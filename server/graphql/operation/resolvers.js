@@ -16,7 +16,6 @@ export default () => ({
 
       if (input[0].workerCode) {
         const workerCodes = input.map(operation => operation.workerCode);
-
         const workers = await models.Worker.findAll({
           where: {
             code: {
@@ -24,9 +23,8 @@ export default () => ({
             },
           },
         });
-
         const setWorkerOperations = operations.map(async (operation, index) => {
-          const worker = workers.find(w => w.dataValues.id === workerCodes[index]);
+          const worker = workers.find(w => w.dataValues.code === workerCodes[index]);
           if (!worker) {
             throw new Error();
           } else {

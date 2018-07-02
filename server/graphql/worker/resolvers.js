@@ -4,7 +4,7 @@ import models from '../../models';
 export default () => ({
   Query: {
     workers: isAuthenticatedResolver.createResolver(() => models.Worker.findAll({
-      order: [['code', 'ASC']],
+      order: [['id', 'DESC']],
     })),
 
     workersReport: isAuthenticatedResolver.createResolver(async (obj, { dateRange }) => models.Worker.findAll({

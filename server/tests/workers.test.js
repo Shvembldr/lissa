@@ -1,4 +1,5 @@
 import faker from 'faker';
+import moment from 'moment/moment';
 import app from '../app';
 import { workers } from './queries';
 import { getTokens, makeGraphQlQuery } from './utils';
@@ -8,6 +9,7 @@ describe('GraphQL Workers', () => {
   let testWorkerId;
   let testWorker;
   let workersCount;
+  const now = new Date();
   beforeAll(async () => {
     tokens = await getTokens();
   });
@@ -28,6 +30,30 @@ describe('GraphQL Workers', () => {
     expect(data.workers[0]).toHaveProperty('name');
     expect(data.workers[0]).toHaveProperty('surname');
     workersCount = data.workers.length;
+  });
+
+  test('Get workers report', async () => {
+    const startDate = moment(now).subtract(1, 'month');
+    const endDate = moment(now);
+    const dateRange = [startDate.toISOString(), endDate.toISOString()];
+    const response = await makeGraphQlQuery({
+      app,
+      tokens: tokens.adminTokens,
+      query: workers.getWorkersReport,
+      variables: {
+        dateRange,
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
+
+    const { data } = response.body;
+    expect(data).toHaveProperty('workersReport');
+    expect(data.workersReport[0]).toHaveProperty('id');
+    expect(data.workersReport[0]).toHaveProperty('code');
+    expect(data.workersReport[0]).toHaveProperty('name');
+    expect(data.workersReport[0]).toHaveProperty('surname');
+    expect(data.workersReport[0]).toHaveProperty('operations');
   });
 
   test('Create worker', async () => {

@@ -4,7 +4,7 @@ import app from '../app';
 import { products } from './queries';
 import { getTokens, makeGraphQlQuery } from './utils';
 import { TABLE_ROW_COUNT } from '../../client/src/constants';
-import models from '../models';
+import models from '../models/index';
 
 describe('GraphQL Products', () => {
   let tokens;

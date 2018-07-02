@@ -2,7 +2,7 @@ import faker from 'faker';
 import app from '../app';
 import { cards, operations, products } from './queries';
 import { getTokens, makeGraphQlQuery } from './utils';
-import models from '../models';
+import models from '../models/index';
 import randomFromArr from '../utils/randomFromArr';
 
 describe('GraphQL Operations', () => {
