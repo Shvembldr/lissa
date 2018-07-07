@@ -88,9 +88,7 @@ class ProductForm extends React.Component {
               })(<CustomerSelect />)}
             </FormItem>
             <FormItem validateStatus={sizeError ? 'error' : ''} help={''}>
-              {getFieldDecorator('size', {
-                rules: [{ required: true }],
-              })(<SizeSelect />)}
+              {getFieldDecorator('size')(<SizeSelect />)}
             </FormItem>
             <FormItem validateStatus={countError ? 'error' : ''} help={''}>
               {getFieldDecorator('count', {
