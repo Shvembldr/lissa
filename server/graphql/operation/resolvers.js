@@ -12,6 +12,7 @@ export default () => ({
             $any: ids,
           },
         },
+        order: [['code', 'ASC']],
       });
 
       if (input[0].workerCode) {
@@ -23,12 +24,12 @@ export default () => ({
             },
           },
         });
-        const setWorkerOperations = operations.map(async (operation, index) => {
-          const worker = workers.find(w => w.dataValues.code === workerCodes[index]);
+        const setWorkerOperations = input.map(async (operation, index) => {
+          const worker = workers.find(worker => worker.dataValues.code === operation.workerCode);
           if (!worker) {
             throw new Error();
           } else {
-            await operation.setWorker(worker);
+            await operations[index].setWorker(worker);
           }
         });
 
