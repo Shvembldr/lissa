@@ -7,6 +7,14 @@ import { Query } from 'react-apollo';
 import { getGroups } from '../../apollo/gql/groups';
 import user from '../../apollo/gql/user';
 import Loading from '../Loading';
+import Products from '../Routes/Products';
+import Reports from '../Routes/Reports';
+import Cards from '../Routes/Cards';
+import Groups from '../Routes/Groups';
+import Workers from '../Routes/Workers';
+import Customers from '../Routes/Customers';
+import { AuthRoute } from '../AuthRoute';
+
 import './style.css';
 
 const { Header, Sider } = Layout;
@@ -17,42 +25,42 @@ class AppLayout extends Component {
     this.menuData = [
       {
         key: 1,
-        link: '/cards',
+        link: '/app/cards',
         iconType: 'barcode',
         title: 'Изделия',
         rights: ['admin', 'user'],
       },
       {
         key: 2,
-        link: '/groups',
+        link: '/app/groups',
         iconType: 'profile',
         title: 'Группы',
         rights: ['admin'],
       },
       {
         key: 3,
-        link: '/workers',
+        link: '/app/workers',
         iconType: 'user',
         title: 'Сотрудники',
         rights: ['admin'],
       },
       {
         key: 4,
-        link: '/customers',
+        link: '/app/customers',
         iconType: 'smile-o',
         title: 'Заказчики',
         rights: ['admin'],
       },
       {
         key: 5,
-        link: '/production',
+        link: '/app/production',
         iconType: 'table',
         title: 'Продукция',
         rights: ['admin', 'user'],
       },
       {
         key: 6,
-        link: '/reports',
+        link: '/app/reports',
         iconType: 'line-chart',
         title: 'Отчет',
         rights: ['admin'],
@@ -87,7 +95,7 @@ class AppLayout extends Component {
     return (
       <Query query={getGroups}>
         {({ loading: loadingOne, error: errorOne }) => (
-          <Query query={user} fetchPolicy="network-only">
+          <Query query={user}>
             {({ loading: loadingTwo, error: errorTwo, data: { me } }) => {
               if (loadingOne || loadingTwo) return <Loading />;
               if (errorOne || errorTwo) return 'Error!';
@@ -120,7 +128,16 @@ class AppLayout extends Component {
                         Выйти
                       </Button>
                     </Header>
-                    {this.props.children}
+                    <AuthRoute roles={['admin', 'user']} path="/app/cards" component={Cards} />
+                    <AuthRoute roles={['admin']} path="/app/groups" component={Groups} />
+                    <AuthRoute roles={['admin']} path="/app/workers" component={Workers} />
+                    <AuthRoute roles={['admin']} path="/app/customers" component={Customers} />
+                    <AuthRoute
+                      roles={['admin', 'user']}
+                      path="/app/production"
+                      component={Products}
+                    />
+                    <AuthRoute roles={['admin']} path="/app/reports" component={Reports} />
                   </Layout>
                 </Layout>
               );

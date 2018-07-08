@@ -28,6 +28,15 @@ export const AuthRoute = ({ component: Component, roles, ...rest }) => (
   <Query query={user}>
     {({ loading, error, data: { me } }) => {
       if (loading) return <Loading />;
+      if (error) {
+        return (
+          <Redirect
+            to={{
+              pathname: '/login',
+            }}
+          />
+        );
+      }
       return (
         <Route
           {...rest}

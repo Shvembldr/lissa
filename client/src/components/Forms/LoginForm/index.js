@@ -30,7 +30,7 @@ class NormalLoginForm extends React.Component {
                     });
                     localStorage.setItem('x-token', token);
                     localStorage.setItem('x-refresh-token', refreshToken);
-                    this.props.history.push('/cards');
+                    this.props.history.push('/app/cards');
                   } catch (e) {
                     console.log('Error: ', e);
                   }
