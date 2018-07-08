@@ -22,6 +22,7 @@ class OperationForm extends React.Component {
         {(updateOperations, { loading }) => (
           <Form
             layout="inline"
+            hideRequiredMark={true}
             onSubmit={(e) => {
               e.preventDefault();
               this.props.form.validateFields(async (err, values) => {
@@ -55,7 +56,7 @@ class OperationForm extends React.Component {
                     help={''}
                     colon={false}>
                     {getFieldDecorator(`${id}`, {
-                      rules: [{ pattern: /^(?!0$)\d+(?:[,.]\d)?$/ }],
+                      rules: [{ required: true, pattern: /^(?!0$)\d+(?:[,.]\d)?$/ }],
                       initialValue: convertedPrice,
                     })(<InputNumber placeholder={convertedPrice} step={0.1} min={0} />)}
                   </FormItem>

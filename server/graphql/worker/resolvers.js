@@ -3,6 +3,11 @@ import models from '../../models';
 
 export default () => ({
   Query: {
+    worker: isAuthenticatedResolver.createResolver((obj, { code }) => models.Worker.findOne({
+      where: {
+        code,
+      },
+    })),
     workers: isAuthenticatedResolver.createResolver(() => models.Worker.findAll({
       order: [['id', 'DESC']],
     })),

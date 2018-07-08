@@ -11,6 +11,17 @@ export const getWorkers = gql`
   }
 `;
 
+export const getWorker = gql`
+  query worker($code: Int!) {
+    worker(code: $code) {
+      id
+      code
+      name
+      surname
+    }
+  }
+`;
+
 export const getWorkersReport = gql`
   query workersReport($dateRange: [String!]) {
     workersReport(dateRange: $dateRange) {

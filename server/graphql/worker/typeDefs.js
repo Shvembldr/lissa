@@ -15,6 +15,7 @@ const Worker = [
   }
   
   extend type Query {
+    worker(code: Int!): Worker
     workers: [Worker]!
     workersReport(dateRange: [String!]): [Worker!]
   }

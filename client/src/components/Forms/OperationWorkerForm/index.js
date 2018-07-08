@@ -25,6 +25,7 @@ class OperationForm extends React.Component {
         {(updateOperations, { loading }) => (
           <Form
             layout="inline"
+            hideRequiredMark={true}
             onSubmit={(e) => {
               e.preventDefault();
               this.props.form.validateFields(async (err, values) => {
@@ -59,7 +60,7 @@ class OperationForm extends React.Component {
                   validateStatus={this.getError(id) ? 'error' : ''}
                   help={''}>
                   {getFieldDecorator(`${id}`, {
-                    rules: [{ pattern: /^\d+$/ }],
+                    rules: [{ required: true, pattern: /^\d+$/ }],
                     initialValue: worker && worker.code,
                   })(<InputNumber style={{ width: 150 }} placeholder="Сотрудник" />)}
                 </FormItem>
