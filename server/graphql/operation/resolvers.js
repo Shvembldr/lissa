@@ -15,7 +15,7 @@ export default () => ({
         },
         order: [['code', 'ASC']],
       });
-      console.log(operations.map(o => o.dataValues.code));
+      console.log({ operationsCodesBefore: operations.map(o => o.dataValues.code) });
       if (!input.price) {
         const workerCodes = input.map(operation => operation.workerCode);
         const workers = await models.Worker.findAll({
@@ -31,14 +31,20 @@ export default () => ({
           if (!worker) {
             throw new Error();
           } else {
-            console.log({ operationIndex: operations[index].code });
-            console.log({ workerCode: worker.dataValues.code });
+            console.log({ operationCode: operations[index].code });
+            console.log({ workerId: worker.dataValues.id });
             await operations[index].setWorker(worker);
           }
         });
 
         try {
           await Promise.all(setWorkerOperations);
+          console.log({
+            operationsAfter: operations.map(o => ({
+              code: o.dataValues.code,
+              workerId: o.dataValues.workerId,
+            })),
+          });
           return operations;
         } catch (e) {
           throw new NoWorkerError();
