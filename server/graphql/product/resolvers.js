@@ -155,7 +155,7 @@ export default () => ({
   Product: {
     operations(product) {
       return product.getOperations({
-        order: [['code', 'ASC']],
+        order: [['id', 'ASC']],
       });
     },
 

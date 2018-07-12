@@ -29,7 +29,6 @@ class OperationForm extends React.Component {
             onSubmit={(e) => {
               e.preventDefault();
               this.props.form.validateFields(async (err, values) => {
-                console.log(values);
                 if (!err) {
                   const input = Object.keys(values).map(key => ({
                     id: parseInt(key, 10),

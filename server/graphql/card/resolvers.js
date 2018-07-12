@@ -72,7 +72,7 @@ export default () => ({
   Card: {
     operations(card) {
       return card.getOperations({
-        order: [['code', 'ASC']],
+        order: [['id', 'ASC']],
       });
     },
 

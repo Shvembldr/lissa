@@ -5,7 +5,6 @@ import { NoWorkerError } from '../errors';
 export default () => ({
   Mutation: {
     updateOperations: isAuthenticatedResolver.createResolver(async (obj, { input }) => {
-      console.log(input);
       const ids = input.map(operation => operation.id);
       const operations = await models.Operation.findAll({
         where: {
@@ -13,9 +12,8 @@ export default () => ({
             $any: ids,
           },
         },
-        order: [['code', 'ASC']],
+        order: [['id', 'ASC']],
       });
-      console.log({ operationsCodesBefore: operations.map(o => o.dataValues.code) });
       if (!input[0].price) {
         const workerCodes = input.map(operation => operation.workerCode);
         const workers = await models.Worker.findAll({
@@ -31,8 +29,6 @@ export default () => ({
           if (!worker) {
             throw new Error();
           } else {
-            console.log({ operationCode: operations[index].code });
-            console.log({ workerId: worker.dataValues.id });
             await operations[index].setWorker(worker);
           }
         });
