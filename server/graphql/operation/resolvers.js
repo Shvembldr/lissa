@@ -16,7 +16,7 @@ export default () => ({
         order: [['code', 'ASC']],
       });
       console.log({ operationsCodesBefore: operations.map(o => o.dataValues.code) });
-      if (!input.price) {
+      if (!input[0].price) {
         const workerCodes = input.map(operation => operation.workerCode);
         const workers = await models.Worker.findAll({
           where: {
