@@ -95,7 +95,7 @@ class AppLayout extends Component {
     return (
       <Query query={getGroups}>
         {({ loading: loadingOne, error: errorOne }) => (
-          <Query query={user}>
+          <Query query={user} fetchPolicy="network-only">
             {({ loading: loadingTwo, error: errorTwo, data: { me } }) => {
               if (loadingOne || loadingTwo) return <Loading />;
               if (errorOne || errorTwo) return 'Error!';
@@ -103,6 +103,7 @@ class AppLayout extends Component {
                 <Layout className="layout">
                   <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={this.getMenuKey()}>
+                      {console.log(me.role)}
                       {this.getMenu(me.role).map(item => (
                         <Menu.Item key={item.key}>
                           <Link to={item.link}>
