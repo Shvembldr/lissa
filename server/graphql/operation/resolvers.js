@@ -6,14 +6,7 @@ export default () => ({
   Mutation: {
     updateOperations: isAuthenticatedResolver.createResolver(async (obj, { input }) => {
       const ids = input.map(operation => operation.id);
-      const operations = await models.Operation.findAll({
-        where: {
-          id: {
-            $any: ids,
-          },
-        },
-        order: [['id', 'ASC']],
-      });
+
       if (!input[0].price) {
         const workerCodes = input.map(operation => operation.workerCode);
         const workers = await models.Worker.findAll({
@@ -24,28 +17,38 @@ export default () => ({
           },
         });
 
-        const setWorkerOperations = input.map(async (operation, index) => {
-          const worker = workers.find(worker => worker.dataValues.code === operation.workerCode);
+        const setWorkerOperations = input.map(async (data) => {
+          const worker = workers.find(worker => worker.dataValues.code === data.workerCode);
+          const operation = await models.Operation.findById(data.id);
           if (!worker) {
             throw new Error();
           } else {
-            await operations[index].setWorker(worker);
+            await operation.setWorker(worker);
           }
         });
 
         try {
           await Promise.all(setWorkerOperations);
-          console.log({
-            operationsAfter: operations.map(o => ({
-              code: o.dataValues.code,
-              workerId: o.dataValues.workerId,
-            })),
+          return models.Operation.findAll({
+            where: {
+              id: {
+                $any: ids,
+              },
+            },
+            order: [['code', 'ASC']],
           });
-          return operations;
         } catch (e) {
           throw new NoWorkerError();
         }
       }
+
+      const operations = await models.Operation.findAll({
+        where: {
+          id: {
+            $any: ids,
+          },
+        },
+      });
 
       const cards = operations.map(operation => operation.getCard({ raw: true }));
 

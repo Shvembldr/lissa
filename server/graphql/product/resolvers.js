@@ -85,21 +85,13 @@ export default () => ({
         date: input.date,
       });
 
-      const createOperations = operations.map(op => models.Operation.create({
-        code: op.code,
-        price: op.price,
-        productId: product.dataValues.id,
-      }));
-
-      await Promise.all(createOperations);
-
-      // await models.Operation.bulkCreate(
-      //   operations.map(op => ({
-      //     code: op.code,
-      //     price: op.price,
-      //     productId: product.dataValues.id,
-      //   })),
-      // );
+      await models.Operation.bulkCreate(
+        operations.map(op => ({
+          code: op.code,
+          price: op.price,
+          productId: product.dataValues.id,
+        })),
+      );
 
       await product.setGroup(group);
       await product.setCustomer(input.customerId);
@@ -163,7 +155,7 @@ export default () => ({
   Product: {
     operations(product) {
       return product.getOperations({
-        order: [['id', 'ASC']],
+        order: [['code', 'ASC']],
       });
     },
 
