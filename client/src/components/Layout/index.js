@@ -103,7 +103,6 @@ class AppLayout extends Component {
                 <Layout className="layout">
                   <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={this.getMenuKey()}>
-                      {console.log(me.role)}
                       {this.getMenu(me.role).map(item => (
                         <Menu.Item key={item.key}>
                           <Link to={item.link}>
