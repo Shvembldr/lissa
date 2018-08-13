@@ -8,6 +8,7 @@
 /coverage
 db.test
 
+
 # misc
 .DS_Store
 .env.local
@@ -25,3 +26,5 @@ dump.rdb
 
 .idea
 vscode
+
+/old

@@ -40,7 +40,6 @@ class NormalLoginForm extends React.Component {
             className="login-form">
             <FormItem validateStatus={error && 'error'}>
               {getFieldDecorator('email', {
-                initialValue: 'admin@admin.com',
                 rules: [{ type: 'email', required: true, message: 'Введите email' }],
               })(
                 <Input
@@ -51,7 +50,6 @@ class NormalLoginForm extends React.Component {
             </FormItem>
             <FormItem validateStatus={error && 'error'} help={error && 'неверные данные'}>
               {getFieldDecorator('password', {
-                initialValue: 'admin',
                 rules: [{ required: true, message: 'Введите пароль' }],
               })(
                 <Input
