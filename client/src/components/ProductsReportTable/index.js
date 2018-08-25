@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Table } from 'antd';
 import { Query } from 'react-apollo';
 import { getProductsReport } from '../../apollo/gql/product';
+import { TABLE_ROW_COUNT } from '../../constants';
 
 const columns = [
   {
@@ -47,7 +48,9 @@ class ProductsReportsTable extends Component {
               dataSource={productsReport && productsReport.report}
               columns={columns}
               pagination={
-                productsReport && productsReport.report.length > 8 ? { pageSize: 8 } : false
+                productsReport && productsReport.report.length > 8
+                  ? { pageSize: TABLE_ROW_COUNT }
+                  : false
               }
             />
           );

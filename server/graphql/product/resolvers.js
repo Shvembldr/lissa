@@ -44,19 +44,20 @@ export default () => ({
 
       const productsHash = products.reduce((acc, product) => {
         const { vendorCode, count, Operations } = product.dataValues;
-        if (!acc.vendorCode) {
+
+        if (!acc[vendorCode]) {
           acc[vendorCode] = {
             count: 0,
             price: Operations.reduce((sum, op) => sum + op.dataValues.price, 0),
           };
         }
-
         acc[vendorCode].count += count;
         acc[vendorCode].sum = acc[vendorCode].count * acc[vendorCode].price;
 
         return acc;
       }, {});
 
+      console.log(productsHash);
       return {
         report: Object.keys(productsHash).map(key => ({
           vendorCode: key,

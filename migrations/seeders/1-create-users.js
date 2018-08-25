@@ -20,7 +20,7 @@ module.exports = {
           role: USER_ROLE.USER,
           password: userPass,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
         }))
         .concat({
           name: 'admin',
@@ -28,13 +28,13 @@ module.exports = {
           role: USER_ROLE.ADMIN,
           password: adminPass,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
         }),
-      {}
+      {},
     );
   },
 
   down(queryInterface) {
     return queryInterface.bulkDelete('Users', null, {});
-  }
+  },
 };

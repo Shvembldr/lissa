@@ -4,20 +4,20 @@
   "private": true,
   "dependencies": {
     "antd": "^3.6.1",
-    "apollo-cache-inmemory": "^1.2.2",
-    "apollo-client": "^2.3.2",
-    "apollo-link-context": "^1.0.8",
-    "apollo-link-http": "^1.5.4",
-    "graphql": "^0.13.2",
-    "graphql-tag": "^2.9.2",
-    "jwt-decode": "^2.2.0",
-    "moment": "^2.22.2",
-    "react": "^16.4.0",
-    "react-apollo": "^2.1.4",
-    "react-dom": "^16.4.0",
-    "react-router-dom": "^4.3.1",
+    "apollo-cache-inmemory": "1.2.5",
+    "apollo-client": "2.3.5",
+    "apollo-link-context": "1.0.8",
+    "apollo-link-http": "1.5.4",
+    "graphql": "0.13.2",
+    "graphql-tag": "2.9.2",
+    "jwt-decode": "2.2.0",
+    "moment": "2.22.2",
+    "react": "16.4.1",
+    "react-apollo": "2.1.8",
+    "react-dom": "16.4.1",
+    "react-router-dom": "4.3.1",
     "react-scripts": "1.1.4",
-    "recharts": "^1.0.0-beta.10"
+    "recharts": "1.0.0-beta.10"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -36,10 +36,10 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "babel-plugin-import": "^1.7.0",
-    "react-app-rewire-less": "^2.1.1",
-    "react-app-rewired": "^1.5.2"
+    "babel-eslint": "7.2.3",
+    "babel-plugin-import": "1.8.0",
+    "react-app-rewire-less": "2.1.2",
+    "react-app-rewired": "1.5.2"
   },
   "proxy": "http://localhost:4000/",
   "engines": {
