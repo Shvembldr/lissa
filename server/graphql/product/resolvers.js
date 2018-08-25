@@ -57,7 +57,6 @@ export default () => ({
         return acc;
       }, {});
 
-      console.log(productsHash);
       return {
         report: Object.keys(productsHash).map(key => ({
           vendorCode: key,

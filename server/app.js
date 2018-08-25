@@ -4,6 +4,7 @@ import express from 'express';
 import path from 'path';
 import { graphiqlRouter, graphqlRouter } from './graphql/routers';
 import { addUser } from './auth';
+import api from './api';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(addUser);
 app.use('/graphql', graphqlRouter);
 app.use('/graphiql', graphiqlRouter);
+app.use('/api', api);
 
 app.use(express.static(path.resolve(__dirname, './../client/build')));
 

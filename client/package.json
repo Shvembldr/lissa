@@ -17,6 +17,7 @@
     "react-dom": "16.4.1",
     "react-router-dom": "4.3.1",
     "react-scripts": "1.1.4",
+    "react-csv": "1.0.14",
     "recharts": "1.0.0-beta.10"
   },
   "scripts": {

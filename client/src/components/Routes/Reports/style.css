@@ -4,3 +4,7 @@
   justify-content: flex-end;
   align-items: center;
 }
+
+.csv-button {
+  margin-right: 20px;
+}
