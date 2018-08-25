@@ -6,7 +6,7 @@ import moment from 'moment';
 import { CSVLink } from 'react-csv';
 import { getWorkersReport } from '../../apollo/gql/workers';
 import WorkerTable from '../WorkerTable';
-import { TABLE_ROW_COUNT } from '../../constants';
+import { DATE_FORMAT, TABLE_ROW_COUNT } from '../../constants';
 
 const columns = [
   {
@@ -39,9 +39,13 @@ class WorkersReportsTable extends Component {
     dateRange: PropTypes.arrayOf(PropTypes.string),
   };
 
-  getFileName = () => `workers-${this.props.dateRange.map(date => moment(date).format('MMM Do YYYY')).join('-')}.csv`;
+  getFileNameAll = () => `workers-${this.props.dateRange.map(date => moment(date).format('MMM Do YYYY')).join('-')}.csv`;
 
-  csvFormat = report => report.map(data => ({
+  getFileNameWorker = record => `${record.surname}-${this.props.dateRange
+    .map(date => moment(date).format('MMM Do YYYY'))
+    .join('-')}.csv`;
+
+  csvFormatAll = report => report.map(data => ({
     Код: data.code,
     Имя: data.name,
     Фамилия: data.surname,
@@ -49,6 +53,14 @@ class WorkersReportsTable extends Component {
       (acc, operation) => acc + operation.price * operation.product.count,
       0,
     ),
+  }));
+
+  csvFormatWorker = operations => operations.map(operation => ({
+    Дата: moment(operation.date).format(DATE_FORMAT),
+    Код: operation.code,
+    Артикул: operation.product.vendorCode,
+    Количество: operation.product.count,
+    Сумма: operation.product.count * operation.price,
   }));
 
   render() {
@@ -62,8 +74,8 @@ class WorkersReportsTable extends Component {
           return (
             <Fragment>
               <CSVLink
-                data={workersReport ? this.csvFormat(workersReport) : []}
-                filename={this.getFileName()}>
+                data={workersReport ? this.csvFormatAll(workersReport) : []}
+                filename={this.getFileNameAll()}>
                 <Button type="primary" className="csv-button">
                   Выгрузить csv
                 </Button>
@@ -78,7 +90,19 @@ class WorkersReportsTable extends Component {
                     ? { pageSize: TABLE_ROW_COUNT }
                     : false
                 }
-                expandedRowRender={record => <WorkerTable operations={record.operations} />}
+                expandedRowRender={record => (
+                  <Fragment>
+                    <CSVLink
+                      data={this.csvFormatWorker(record.operations)}
+                      filename={this.getFileNameWorker(record)}>
+                      <Button type="primary" className="csv-button">
+                        Выгрузить csv
+                      </Button>
+                    </CSVLink>
+
+                    <WorkerTable operations={record.operations} />
+                  </Fragment>
+                )}
               />
             </Fragment>
           );
