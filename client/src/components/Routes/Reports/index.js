@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Button, DatePicker, Layout, Tabs,
-} from 'antd';
+import { DatePicker, Layout, Tabs } from 'antd';
 import moment from 'moment';
-import { CSVLink } from 'react-csv';
 import WorkersReportsTable from '../../WorkersReportTable';
 import ProductsReportsTable from '../../ProductsReportTable';
 import Charts from '../../Charts';
@@ -19,49 +16,6 @@ const defaultDateRange = [moment(now, DATE_FORMAT).subtract(1, 'month'), moment(
 class Reports extends Component {
   state = {
     dateRange: defaultDateRange.map(date => date.toISOString()),
-    csvData: [],
-    filename: 'workers.csv',
-  };
-
-  componentDidMount = async () => {
-    const response = await fetch('http://localhost:4000/api/report', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ dateRange: this.state.dateRange, report: 'workers' }),
-    });
-
-    const csvData = await response.json();
-    this.setState({
-      csvData,
-    });
-  };
-
-  onTabsChange = async (tab) => {
-    if (tab === '1') {
-      const response = await fetch('http://localhost:4000/api/report', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dateRange: this.state.dateRange, report: 'workers' }),
-      });
-
-      const csvData = await response.json();
-      this.setState({
-        csvData,
-        filename: 'workers.csv',
-      });
-    } else if (tab === '2') {
-      const response = await fetch('http://localhost:4000/api/report', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dateRange: this.state.dateRange, report: 'products' }),
-      });
-
-      const csvData = await response.json();
-      this.setState({
-        csvData,
-        filename: 'products.csv',
-      });
-    }
   };
 
   onDateChange = (value) => {
@@ -71,22 +25,16 @@ class Reports extends Component {
   };
 
   render() {
-    const { csvData, filename } = this.state;
     return (
       <Content className="content">
         <div className="range-picker-container">
-          <CSVLink data={csvData} filename={filename}>
-            <Button type="primary" className="csv-button">
-              Выгрузить csv
-            </Button>
-          </CSVLink>
           <RangePicker
             defaultValue={defaultDateRange}
             format={DATE_FORMAT}
             onChange={this.onDateChange}
           />
         </div>
-        <Tabs defaultActiveKey="1" onChange={this.onTabsChange}>
+        <Tabs defaultActiveKey="1">
           <TabPane tab="Отчет по сотрудникам" key="1">
             <WorkersReportsTable dateRange={this.state.dateRange} />
           </TabPane>

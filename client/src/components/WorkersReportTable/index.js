@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
 import { Query } from 'react-apollo';
+import moment from 'moment';
+import { CSVLink } from 'react-csv';
 import { getWorkersReport } from '../../apollo/gql/workers';
 import WorkerTable from '../WorkerTable';
 import { TABLE_ROW_COUNT } from '../../constants';
@@ -37,6 +39,18 @@ class WorkersReportsTable extends Component {
     dateRange: PropTypes.arrayOf(PropTypes.string),
   };
 
+  getFileName = () => `workers-${this.props.dateRange.map(date => moment(date).format('MMM Do YYYY')).join('-')}.csv`;
+
+  csvFormat = report => report.map(data => ({
+    Код: data.code,
+    Имя: data.name,
+    Фамилия: data.surname,
+    'Количество минут': data.operations.reduce(
+      (acc, operation) => acc + operation.price * operation.product.count,
+      0,
+    ),
+  }));
+
   render() {
     return (
       <Query
@@ -46,18 +60,27 @@ class WorkersReportsTable extends Component {
         {({ loading, error, data: { workersReport } }) => {
           if (error) return `Error! ${error.message}`;
           return (
-            <Table
-              rowKey={worker => worker.id}
-              loading={loading}
-              dataSource={workersReport}
-              columns={columns}
-              pagination={
-                workersReport && workersReport.length > TABLE_ROW_COUNT
-                  ? { pageSize: TABLE_ROW_COUNT }
-                  : false
-              }
-              expandedRowRender={record => <WorkerTable operations={record.operations} />}
-            />
+            <Fragment>
+              <CSVLink
+                data={workersReport ? this.csvFormat(workersReport) : []}
+                filename={this.getFileName()}>
+                <Button type="primary" className="csv-button">
+                  Выгрузить csv
+                </Button>
+              </CSVLink>
+              <Table
+                rowKey={worker => worker.id}
+                loading={loading}
+                dataSource={workersReport}
+                columns={columns}
+                pagination={
+                  workersReport && workersReport.length > TABLE_ROW_COUNT
+                    ? { pageSize: TABLE_ROW_COUNT }
+                    : false
+                }
+                expandedRowRender={record => <WorkerTable operations={record.operations} />}
+              />
+            </Fragment>
           );
         }}
       </Query>
