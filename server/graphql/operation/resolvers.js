@@ -50,22 +50,18 @@ export default () => ({
         },
       });
 
-      const cards = operations.map(operation => operation.getCard({ raw: true }));
+      const card = await operations[0].getCard({ raw: true });
 
-      const resolvedCards = await Promise.all(cards);
-
-      const cardVendorCodes = resolvedCards.map(card => card.vendorCode);
+      const cardVendorCodes = card.vendorCode;
 
       const products = await models.Product.findAll({
         where: {
-          vendorCode: {
-            $any: cardVendorCodes,
-          },
+          vendorCode: cardVendorCodes,
         },
       });
 
       if (products) {
-        const productOperations = products.map(product => product.getOperations());
+        const productOperations = products.map(product => product.getOperations({ order: [['code', 'ASC']] }));
 
         const resolvedProductOperations = await Promise.all(productOperations);
 
