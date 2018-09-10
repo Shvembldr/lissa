@@ -28,7 +28,7 @@ const columns = [
   {
     title: 'Сумма',
     key: 'sum',
-    render: (text, record) => record.product.count * record.price,
+    render: (text, record) => parseFloat((record.product.count * record.price) / 10).toFixed(1),
   },
 ];
 

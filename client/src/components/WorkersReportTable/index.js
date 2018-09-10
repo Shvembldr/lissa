@@ -27,10 +27,12 @@ const columns = [
   {
     title: 'Количество минут',
     key: 'id',
-    render: worker => worker.operations.reduce(
-      (acc, operation) => acc + operation.price * operation.product.count,
-      0,
-    ),
+    render: worker => parseFloat(
+      worker.operations.reduce(
+        (acc, operation) => acc + operation.price * operation.product.count,
+        0,
+      ) / 10,
+    ).toFixed(1),
   },
 ];
 
@@ -50,7 +52,7 @@ class WorkersReportsTable extends Component {
     Имя: data.name,
     Фамилия: data.surname,
     'Количество минут': data.operations.reduce(
-      (acc, operation) => acc + operation.price * operation.product.count,
+      (acc, operation) => acc + (operation.price * operation.product.count) / 10,
       0,
     ),
   }));
@@ -60,7 +62,7 @@ class WorkersReportsTable extends Component {
     Код: operation.code,
     Артикул: operation.product.vendorCode,
     Количество: operation.product.count,
-    Сумма: operation.product.count * operation.price,
+    Сумма: (operation.product.count * operation.price) / 10,
   }));
 
   render() {
