@@ -59,7 +59,7 @@ class ProductForm extends React.Component {
                             customerId: customer,
                             size,
                             count,
-                            date: date.toISOString(),
+                            date: date.endOf('day').toISOString(),
                           },
                         },
                       });
