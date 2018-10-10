@@ -70,7 +70,7 @@ class Products extends Component {
 
   onSearchDate = () => {
     const { searchDateRange, queryVariables } = this.state;
-    const dates = searchDateRange.map(date => date.toISOString());
+    const dates = searchDateRange.map(date => date.endOf('day').toISOString());
     this.setState({
       filterDateDropdownVisible: false,
       filteredDate: true,
@@ -208,7 +208,9 @@ class Products extends Component {
         key: 'date',
         editable: true,
         type: 'datePicker',
-        render: date => moment(new Date(date)).format('DD.MM.YYYY'),
+        render: date => moment(new Date(date))
+          .endOf('day')
+          .format('DD.MM.YYYY'),
         filterDropdown: (
           <div className="custom-filter-dropdown-date">
             <RangePicker

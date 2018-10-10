@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { isAdminResolver, isAuthenticatedResolver } from '../baseResolver';
 import models from '../../models';
 
@@ -20,7 +21,12 @@ export default () => ({
               $any: filters && filters.length > 0 ? filters.map(id => parseInt(id, 10)) : groupIds,
             },
             date: {
-              $between: dates || ['1970-01-01T00:00:00+00:00', date.toISOString()],
+              $between: dates || [
+                '1970-01-01T00:00:00+00:00',
+                moment(date)
+                  .endOf('day')
+                  .toISOString(),
+              ],
             },
           },
           limit: limit || 8,
